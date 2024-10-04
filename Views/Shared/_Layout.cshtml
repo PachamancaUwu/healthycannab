@@ -9,39 +9,39 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/healthycannab.styles.css" asp-append-version="true" />
 </head>
-<body>
+<body >
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Main" asp-action="Inicio">
-                    <img src="~/img/logo.png" alt="HealthyCannab Logo" height="50px">
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Main" asp-action="Inicio">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Main" asp-action="Inicio">Catálogo</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Main" asp-action="Inicio">Blog</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Main" asp-action="Inicio">Contacto</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Main" asp-action="Inicio">Nosotros</a>
-                        </li>
-                    </ul>
-                    <!--<partial name="_LoginPartial" />-->
-                </div>
-            </div>
-        </nav>
+        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom shadow-sm mb-3">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="~/img/logo.png" alt="HealthyCannab Logo" height="50px" class="me-2">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="#">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="#">Catálogo</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="#">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="#">Contacto</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="#">Nosotros</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
     </header>
     <div class="container">
         <main role="main" class="pb-3">
@@ -50,8 +50,77 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - HealthyCannab
+        <div class="container-fluid">
+            <div class="row text-left text-md-left">
+                    <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                        <h5 id="titulo_hd" class="text-uppercase mb-4 fw-bold">Sobre Nosotros</h5>
+                        <hr class="mb-4">
+                        <p>Somos un centro especializado en la venta de productos medicinales derivados del cannabis.</p>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                        <h5 id="titulo_hd" class="text-uppercase mb-4 fw-bold">Centro de ayuda</h5>
+                        <hr class="mb-4">
+                        <p>
+                          <a href="/www/contactanos     footer/contactanos.html" class="text-dark" style="text-decoration:none;">Contáctanos</a>
+                        </p>
+                        <p>
+                          <a href="#" class="text-dark" style="text-decoration:none;">Ayuda</a>
+                        </p>
+                        <p>
+                          <a href="/www/4     servicios      (LISTO)/servicios.html" class="text-dark" style="text-decoration:none;">Servicios</a>
+                        </p>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                      <h5 id="titulo_hd" class="text-uppercase mb-4 fw-bold">Términos legales</h5>
+                      <hr class="mb-4">
+                      <p>
+                        <a href="#" class="text-dark" style="text-decoration:none;">Politica y privacidad</a>
+                      </p>
+                      <p>
+                        <a href="../PL1/Iniciar_Sesion/reclamos/libro_reclamos.html" class="text-dark" style="text-decoration:none;">Reportar abuso</a>
+                      </p>
+                    </div>
+                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                        <h5 id="titulo_hd" class="text-uppercase mb-4 fw-bold">Información de contacto</h5>
+                        <hr class="mb-4">
+                        <p>
+                           Av. La República 234, Surco.
+                        </p>
+                        <p>
+                           Healthycannabis@gmail.com
+                        <p>
+                          +51 902 368 688 
+                        </p>
+                    </div>
+                    <hr class="mb-4">
+                    <div class="row d-flex justify-content-center text-center">
+                        <div>
+                            <p>
+                                Copyright 2024 All Rights Reserved By:
+                              <a href="" style="text-decoration: none;"><strong style="color: #07c8be;">GrupoLanzala</strong>
+                              </a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-center">
+                        <div class="text-center">
+                          <ul class="list-unstyled list-inline">
+                              <li class="list-inline-item">
+                                  <a href="#" class="text-dark"><i id="red1" class=""></i></a>
+                              </li>
+                              <li class="list-inline-item">
+                                  <a href="#" class="text-dark"><i id="red3" class=""></i></a>
+                              </li>
+                              <li class="list-inline-item">
+                                  <a href="#" class="text-dark"><i id="red2" class=""></i></a>
+                              </li>
+                              <li class="list-inline-item">
+                                  <a href="#" class="text-dark"><i id="red4" class=""></i></a>
+                              </li>
+                          </ul>
+                        </div>
+                    </div>
+                </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
