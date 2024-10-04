@@ -100,3 +100,16 @@
 .shadow-lg {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Sombra suave alrededor de la imagen */
 }
+.faq-section {
+  background-color: #f8f9fa;
+}
+.accordion-button {
+  background-color: #4ab955;
+  color: white;
+}
+.accordion-button:not(.collapsed) {
+  background-color: #4ab955;
+}
+.accordion-body {
+  background-color: white;
+}
