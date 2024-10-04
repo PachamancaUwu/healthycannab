@@ -2748,19 +2748,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\jair_\\.nuget\\packages\\": {}
+    "C:\\Users\\USUARIO\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\jair_\\Downloads\\healthycannab\\healthycannab.csproj",
+      "projectUniqueName": "C:\\Users\\USUARIO\\Desktop\\Programacion I\\healthycannab\\healthycannab.csproj",
       "projectName": "healthycannab",
-      "projectPath": "c:\\Users\\jair_\\Downloads\\healthycannab\\healthycannab.csproj",
-      "packagesPath": "C:\\Users\\jair_\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\jair_\\Downloads\\healthycannab\\obj\\",
+      "projectPath": "C:\\Users\\USUARIO\\Desktop\\Programacion I\\healthycannab\\healthycannab.csproj",
+      "packagesPath": "C:\\Users\\USUARIO\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\USUARIO\\Desktop\\Programacion I\\healthycannab\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\jair_\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\USUARIO\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
