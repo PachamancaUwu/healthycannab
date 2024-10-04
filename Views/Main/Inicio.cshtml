@@ -2,9 +2,180 @@
     ViewData["Title"] = "Inicio";
 }
 
-<h1>@ViewData["Title"]</h1>
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<link rel="stylesheet" href="~/css/inicio.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/js/inicio.js" asp-append-version="true" />
+<div class="hero-section text-center py-5">
+    <h1 class="display-4 font-weight-bold">Bienvenido a HealthyCannabis</h1>
+    <p class="lead mt-3 mb-4">
+        Tu aliado natural para mejorar tu bienestar físico y emocional.
+        Explora nuestros productos y descubre cómo el cannabis puede formar parte de un estilo de vida saludable.
+    </p>
+    <a asp-controller="Producto" asp-action="Index" class="btn btn-primary btn-lg">Explorar Productos</a>
 </div>
+
+
+<!-- Carrusel principal -->
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="~/img/imagen1.png" class="d-block w-100" alt="...">
+            <div class="carousel-caption">
+                <h5>"La importancia de valorarse uno mismo"</h5>
+                <p>Médicos especialistas con el objetivo de mejorar la salud mental en el distrito de La Marina.</p>
+                
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="~/img/imagen2.png" class="d-block w-100" alt="...">
+            <div class="carousel-caption">
+                <h5>"Encuentra el equilibrio que necesitas"</h5>
+                <p>Productos de alta calidad para mejorar tu bienestar físico y mental de forma natural.</p>
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <a class="btn btn-primary" style="background-color: #4ab955;"  role="button">Iniciar Sesión</a>
+                    <a class="btn btn-primary" style="background-color: #4ab955;"  role="button">Registrarse</a>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="~/img/imagen3.png" class="d-block w-100" alt="...">
+            <div class="carousel-caption">
+                <h5>"Bienestar físico y mental"</h5>
+                <p>Descubre el poder del cannabis para transformar tu vida diaria.</p>
+                
+            </div>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Siguiente</span>
+    </button>
+</div>
+
+<!-- Sección de beneficios -->
+<div class="title-cards">
+    <h2>Beneficios</h2>
+</div>
+<div class="container-card">
+    <div class="card">
+        <figure>
+            <img src="~/img/bene1.png" alt="Beneficio 1">
+        </figure>
+        <div class="contenido-card">
+            <h3>Gestionar mejor tus emociones y sentimientos</h3>
+            <p>El cannabis contiene compuestos que pueden ayudar a reducir el estrés y la ansiedad de manera natural. Los cannabinoides interactúan con el sistema endocannabinoide del cuerpo, ayudando a equilibrar las respuestas emocionales y promoviendo una sensación de calma y bienestar</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <figure>
+            <img src="~/img/bene2.png" alt="Beneficio 2">
+        </figure>
+        <div class="contenido-card">
+            <h3>Encontrarte a ti mismo y ser tu mejor opción</h3>
+            <p>Para quienes tienen dificultades para dormir, el cannabis puede ser una opción natural para mejorar la calidad del sueño. Sus propiedades sedantes pueden ayudar a relajarse antes de dormir y promover un descanso profundo, ayudando a combatir el insomnio y el sueño interrumpido.</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <figure>
+            <img src="~/img/bene3.png" alt="Beneficio 3">
+        </figure>
+        <div class="contenido-card">
+            <h3>Aprender a manejar conflictos</h3>
+            <p>El cannabis ha demostrado ser eficaz en el manejo del dolor crónico y la inflamación. Sus propiedades analgésicas y antiinflamatorias lo convierten en una alternativa natural para quienes padecen de afecciones como la artritis, dolores musculares o lesiones.
+Estos textos destacan algunos de los beneficios que se suelen asociar con el cannabis y pueden ser adaptados para ajustarse a la temática de tu sitio web.</p>
+        </div>
+    </div>
+</div>
+<!-- Sección Sobre Nosotros -->
+<div class="about-section py-5 bg-light" style="margin-top: 25px;">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Texto -->
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <h2 class="text-start mb-4">Sobre Nosotros</h2>
+                <p class="lead mb-4" id="about-text">
+                    Somos una empresa líder en la industria del cannabis medicinal, comprometida con proporcionar productos de alta calidad que mejoren la calidad de vida de nuestros clientes. Entendemos el potencial terapéutico del cannabis y ofrecemos una amplia gama de soluciones medicinales cuidadosamente elaboradas, respaldadas por investigación científica y cultivadas bajo estrictos estándares de seguridad y sostenibilidad. Nuestro enfoque está en promover el bienestar y apoyar a pacientes con una variedad de condiciones de salud, desde el alivio del dolor crónico hasta la gestión de trastornos neurológicos. Trabajamos de la mano con profesionales médicos y especialistas para asegurar que cada cliente reciba el tratamiento adecuado, ajustado a sus necesidades individuales.
+                    <span id="more-text" style="display: none;">
+                        Desde nuestros inicios, hemos sido pioneros en el uso del cannabis medicinal para tratar diversas condiciones y promover un estilo de vida saludable. Nos enorgullecemos de ofrecer productos que son 100% naturales, seguros y de la mejor calidad. Además, nuestro compromiso con la sostenibilidad asegura que cada paso de nuestra producción sea respetuoso con el medio ambiente.
+                    </span>
+                </p>
+                <div class="d-grid gap-2 d-lg-block">
+                    <a id="read-more-btn" class="btn btn-primary btn-lg" style="background-color: #4ab955; border-color: #4ab955;" asp-controller="Nosotros" asp-action="Index">Leer más</a>
+                </div>
+            </div>
+
+            <!-- Imagen -->
+            <div class="col-lg-6">
+                <div class="position-relative">
+                    <img src="~/img/nosotros.png" alt="Sobre Nosotros" class="img-fluid rounded shadow-lg">
+                    <!-- Overlay Text -->
+                    <div class="about-overlay position-absolute top-0 start-0 h-100 w-100 d-flex flex-column justify-content-center text-center p-4 text-white bg-dark bg-opacity-50 rounded">
+                        <h3 class="display-6">Tu Salud es lo Primero</h3>
+                        <p class="lead">Innovamos con productos de calidad para tu bienestar.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Sección FAQ -->
+<div class="faq-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Preguntas Frecuentes</h2>
+        <div class="accordion" id="faqAccordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="color: black;">
+                        ¿Qué beneficios tiene el uso del cannabis?
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        El cannabis puede ayudar a reducir el estrés, mejorar el sueño y aliviar el dolor crónico. Los cannabinoides presentes en el cannabis interactúan con el sistema endocannabinoide del cuerpo, regulando procesos fisiológicos.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="color: black;">
+                        ¿Es legal el cannabis en mi país?
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        La legalidad del cannabis varía según el país y la región. En algunos lugares, su uso medicinal es legal, mientras que en otros también está permitido el uso recreativo. Te recomendamos verificar las leyes locales.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" style="color: black;">
+                        ¿Qué productos ofrecen?
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Ofrecemos una amplia gama de productos que incluyen aceites, cremas, y suplementos que contienen compuestos de cannabis cuidadosamente formulados para mejorar tu bienestar.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
