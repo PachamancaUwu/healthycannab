@@ -11,36 +11,37 @@
 </head>
 <body >
     <header>
-        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom shadow-sm mb-3">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <img src="~/img/logo.png" alt="HealthyCannab Logo" height="50px" class="me-2">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav"
-                aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="#">Inicio</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="#">Catálogo</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="#">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="#">Contacto</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="#">Nosotros</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Main" asp-action="Inicio">
+                    <img src="~/img/logo.png" alt="HealthyCannab Logo" height="50px">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Main" asp-action="Inicio">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Main" asp-action="Inicio">Catálogo</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Main" asp-action="Inicio">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Main" asp-action="Inicio">Contacto</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Main" asp-action="Inicio">Nosotros</a>
+                        </li>
+                    </ul>
+                    <!--<partial name="_LoginPartial" />-->
+                </div>
+            </div>
+        </nav>
 
     </header>
     <div class="container">
