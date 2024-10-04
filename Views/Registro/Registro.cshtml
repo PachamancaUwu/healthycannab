@@ -1,0 +1,56 @@
+@model healthycannab.Models.Usuario
+
+@{
+    ViewData["Title"] = "Registrar";
+}
+
+<h2>Registrar nuevo usuario</h2>
+
+<form asp-action="Register" method="post">
+    <div class="form-group">
+        <label asp-for="Nombre"></label>
+        <input asp-for="Nombre" class="form-control" placeholder="Ingrese su nombre" />
+        <span asp-validation-for="Nombre" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ApellidoPaterno"></label>
+        <input asp-for="ApellidoPaterno" class="form-control" placeholder="Ingrese su apellido paterno" />
+        <span asp-validation-for="ApellidoPaterno" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ApellidoMaterno"></label>
+        <input asp-for="ApellidoMaterno" class="form-control" placeholder="Ingrese su apellido materno" />
+        <span asp-validation-for="ApellidoMaterno" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Correo"></label>
+        <input asp-for="Correo" class="form-control" placeholder="Ingrese su correo" />
+        <span asp-validation-for="Correo" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Contrasena"></label>
+        <input asp-for="Contrasena" type="password" class="form-control" placeholder="Ingrese su contraseña" />
+        <span asp-validation-for="Contrasena" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Celular"></label>
+        <input asp-for="Celular" class="form-control" placeholder="Ingrese su celular" />
+        <span asp-validation-for="Celular" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Dirección"></label>
+        <input asp-for="Dirección" class="form-control" placeholder="Ingrese su dirección" />
+        <span asp-validation-for="Dirección" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Dni"></label>
+        <input asp-for="Dni" class="form-control" placeholder="Ingrese su DNI" />
+        <span asp-validation-for="Dni" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Registrar</button>
+</form>
+
+@if (ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-success">@ViewBag.SuccessMessage</div>
+}
