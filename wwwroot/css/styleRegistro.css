@@ -1,0 +1,40 @@
+body {
+  background-color: #e0f7e9;
+}
+
+h2 {
+  color: #4ab955;
+  text-align: center;
+}
+
+form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-control {
+  border: 1px solid #4ab955;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+label {
+  color: #4ab955;
+}
+
+button {
+  background-color: #4ab955;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #3a9c44;
+}
