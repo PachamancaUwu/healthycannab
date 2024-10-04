@@ -2753,11 +2753,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\USUARIO\\Desktop\\Programacion I\\healthycannab\\healthycannab.csproj",
+      "projectUniqueName": "C:\\Users\\USUARIO\\Downloads\\Proyecto_Programación1\\healthycannab\\healthycannab.csproj",
       "projectName": "healthycannab",
-      "projectPath": "C:\\Users\\USUARIO\\Desktop\\Programacion I\\healthycannab\\healthycannab.csproj",
+      "projectPath": "C:\\Users\\USUARIO\\Downloads\\Proyecto_Programación1\\healthycannab\\healthycannab.csproj",
       "packagesPath": "C:\\Users\\USUARIO\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\USUARIO\\Desktop\\Programacion I\\healthycannab\\obj\\",
+      "outputPath": "C:\\Users\\USUARIO\\Downloads\\Proyecto_Programación1\\healthycannab\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\USUARIO\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -2835,7 +2835,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.402/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

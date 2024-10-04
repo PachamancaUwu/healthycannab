@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "7RtYpQP+PBQ=",
+  "dgSpecHash": "G4ee/epUzjY=",
   "success": true,
-  "projectFilePath": "C:\\Users\\USUARIO\\Desktop\\Programacion I\\healthycannab\\healthycannab.csproj",
+  "projectFilePath": "C:\\Users\\USUARIO\\Downloads\\Proyecto_Programación1\\healthycannab\\healthycannab.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\USUARIO\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\USUARIO\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\8.0.7\\microsoft.aspnetcore.cryptography.internal.8.0.7.nupkg.sha512",
