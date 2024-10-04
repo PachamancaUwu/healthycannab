@@ -15,7 +15,7 @@ namespace healthycannab.Controllers
     
     public class RegistroController : Controller
     {
-        private readonly ApplicationDbContext _context; // Cambia a ApplicationDbContext
+        private readonly ApplicationDbContext _context;
 
         public RegistroController(ApplicationDbContext context)
         {
@@ -23,23 +23,23 @@ namespace healthycannab.Controllers
         }
 
         [HttpGet]
-        public IActionResult Registrar()
+        public IActionResult Registro()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Registrar(Usuario model)
+        public IActionResult Registro(Usuario model)
         {
             if (ModelState.IsValid)
             {
-                // Verificar si ya existe un usuario con el mismo correo
+                
                 var existingUser = _context.DataUsuario.FirstOrDefault(u => u.Correo == model.Correo);
                 if (existingUser == null)
                 {
-                    // Agregar el nuevo usuario a la base de datos
+                    
                     _context.DataUsuario.Add(model);
-                    _context.SaveChanges(); // Guardar cambios en la base de datos
+                    _context.SaveChanges();
 
                     ViewBag.SuccessMessage = "Usuario registrado correctamente.";
                     return View();
