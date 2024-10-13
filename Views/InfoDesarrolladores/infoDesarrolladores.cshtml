@@ -1,0 +1,59 @@
+@{
+    ViewData["Title"] = "Información de los Desarrolladores";
+}
+
+<link rel="stylesheet" href="~/css/infodev.css" asp-append-version="true" />
+
+<div>
+    <section class="banner-area">
+        <div class="banner-img"></div>
+        <h1 style="text-align: center;">Información <span>de los Desarrolladores</span></h1>
+    </section>
+</div>
+
+<div class="container pt-5">
+    <section class="developer-area" id="developer">
+        <div class="developer-container"> <!-- Nuevo contenedor -->
+            <h2 class="section-title">Conoce a Nuestro Equipo</h2>
+            <h6 style="text-align: center;">En nuestra empresa, contamos con un equipo diverso de desarrolladores apasionados y talentosos. Cada uno de ellos aporta su propia experiencia y habilidades, asegurando que cada proyecto sea un éxito.</h6>
+
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="developer-card">
+                        <img src="~/img/infodev/emile.jpg" alt="Desarrollador 1" class="developer-img">
+                        <h3 class="developer-name">Yitzak Emile Zamudio</h3>
+                        <p class="developer-role">Líder de Proyecto</p>
+                        <p class="developer-bio">Organizador del proyecto</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="developer-card">
+                        <img src="~/img/infodev/matias.jpg" alt="Desarrollador 2" class="developer-img">
+                        <h3 class="developer-name">Matias Cueto</h3>
+                        <p class="developer-role">Desarrollador Backend</p>
+                        <p class="developer-bio">Encargado de la logica</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="developer-card">
+                        <img src="~/img/infodev/jair.jpg" alt="Desarrollador 3" class="developer-img">
+                        <h3 class="developer-name">Jair Josue Escalante</h3>
+                        <p class="developer-role">Desarrollador Frontend</p>
+                        <p class="developer-bio">Encargado de las vistas</p>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                        <div class="developer-card mx-auto" style="width: 400px;">
+                            <img src="~/img/infodev/michael.jpg" alt="Desarrollador 4" class="developer-img">
+                            <h3 class="developer-name">Michael Orihuela</h3>
+                            <p class="developer-role">Diseñador UX/UI</p>
+                            <p class="developer-bio">Encargado del estilo y diseño de la página</p>
+                        </div>
+                </div>
+
+            </div>
+        </div> <!-- Cierre del nuevo contenedor -->
+
+
+    </section>
+</div>

@@ -1,0 +1,75 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+.navbar {
+  font-family: inherit; /* Mantiene la fuente por defecto de Bootstrap */
+}
+
+.developer-container {
+  position: relative; /* Necesario para el posicionamiento de elementos hijos */
+  background-image: url(../img/infodev/fondo_cannab.jpg); /* Ruta correcta de tu imagen de fondo */
+  background-size: cover; /* Ajusta la imagen al tamaño del contenedor */
+  background-position: center; /* Centra la imagen */
+  background-repeat: no-repeat; /* No repite la imagen */
+  border-radius: 8px;
+  padding: 20px; /* Espaciado interno */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+.developer-container::before {
+  content: ""; /* Necesario para crear el pseudo-elemento */
+  position: absolute; /* Posiciona la superposición */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; /* Ocupa toda la altura y anchura del contenedor */
+  background-color: rgba(0, 0, 0, 0.5); /* Color negro con opacidad */
+  z-index: 0; /* Asegura que la superposición esté detrás del contenido */
+}
+
+h2.section-title,
+h6,
+.developer-card {
+  position: relative; /* Necesario para que el texto esté encima de la superposición */
+  color: #fefefe; /* Cambia el color del texto a blanco para que contraste con el fondo */
+  z-index: 1; /* Asegura que el texto esté por encima de la superposición */
+}
+
+/*------------------------*/
+
+.developer-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: transform 0.2s;
+}
+
+.developer-card:hover {
+  transform: translateY(-5px);
+}
+
+.developer-img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.developer-name {
+  color: #4ab955;
+  font-size: 22px;
+  margin: 10px 0 5px;
+}
+
+.developer-role {
+  color: #a7a7a7;
+  font-weight: bold;
+}
+
+.developer-bio {
+  color: #333;
+  line-height: 1.5;
+}
