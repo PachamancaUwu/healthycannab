@@ -37,5 +37,12 @@ namespace healthycannab.Controllers
         {
             return View("Error!");
         }
+
+
+        public IActionResult Chat()
+        {
+            return View();
+        }
+
     }
 }

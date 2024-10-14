@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using healthycannab.Data;
+using healthycannab.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddSignalR();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -38,6 +41,9 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Main}/{action=Inicio}/{id?}");
+
+    app.MapHub<ChatHub>("/chatHub");
+
 app.MapRazorPages();
 
 app.Run();
