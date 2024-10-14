@@ -1,8 +1,12 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "4lfiAFkHjDc=",
+=======
+  "dgSpecHash": "7RtYpQP+PBQ=",
+>>>>>>> 36776bd83cdf8dfbb4954c6f149b834239b534d2
   "success": true,
-  "projectFilePath": "C:\\Users\\USUARIO\\Downloads\\Proyecto_Programación1\\healthycannab\\healthycannab.csproj",
+  "projectFilePath": "C:\\Users\\USUARIO\\Desktop\\Programacion I\\healthycannab\\healthycannab.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\USUARIO\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\USUARIO\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
