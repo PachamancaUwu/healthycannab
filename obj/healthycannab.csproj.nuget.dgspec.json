@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ASUS\\Documents\\ProgramacionI\\proyecto\\healthycannab\\healthycannab.csproj": {}
+    "C:\\Users\\jair_\\healthycannab\\healthycannab.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ASUS\\Documents\\ProgramacionI\\proyecto\\healthycannab\\healthycannab.csproj": {
+    "C:\\Users\\jair_\\healthycannab\\healthycannab.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ASUS\\Documents\\ProgramacionI\\proyecto\\healthycannab\\healthycannab.csproj",
+        "projectUniqueName": "C:\\Users\\jair_\\healthycannab\\healthycannab.csproj",
         "projectName": "healthycannab",
-        "projectPath": "C:\\Users\\ASUS\\Documents\\ProgramacionI\\proyecto\\healthycannab\\healthycannab.csproj",
-        "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ASUS\\Documents\\ProgramacionI\\proyecto\\healthycannab\\obj\\",
+        "projectPath": "C:\\Users\\jair_\\healthycannab\\healthycannab.csproj",
+        "packagesPath": "C:\\Users\\jair_\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jair_\\healthycannab\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\jair_\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -89,7 +89,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.402/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
