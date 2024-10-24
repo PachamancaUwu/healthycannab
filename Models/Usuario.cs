@@ -22,5 +22,8 @@ namespace healthycannab.Models
         public string Dirección { get; set; }
         public string Dni { get; set; }    
         public string Rol { get; set; }
+
     }
-}
+
+ }
+ 
