@@ -1,0 +1,69 @@
+@{
+    ViewData["Title"] = "Registro";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h4 class="text-center">Registro de Usuario</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" asp-action="Registro">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="Nombre">Nombre</label>
+                                <input type="text" name="Nombre" class="form-control" placeholder="Ingresa tu nombre" required />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="ApellidoPaterno">Apellido Paterno</label>
+                                <input type="text" name="ApellidoPaterno" class="form-control" placeholder="Ingresa tu apellido paterno" required />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="ApellidoMaterno">Apellido Materno</label>
+                                <input type="text" name="ApellidoMaterno" class="form-control" placeholder="Ingresa tu apellido materno" required />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="Correo">Correo</label>
+                                <input type="email" name="Correo" class="form-control" placeholder="Ingresa tu correo" required />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="Contrasena">Contraseña</label>
+                                <input type="password" name="Contrasena" class="form-control" placeholder="Ingresa tu contraseña" required />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="Celular">Celular</label>
+                                <input type="tel" name="Celular" class="form-control" placeholder="Ingresa tu celular" required />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="Dirección">Dirección</label>
+                                <input type="text" name="Dirección" class="form-control" placeholder="Ingresa tu dirección" required />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="Dni">DNI</label>
+                                <input type="text" name="Dni" class="form-control" placeholder="Ingresa tu DNI" required />
+                            </div>
+                        </div>
+
+                        <!-- El campo Rol está oculto y siempre es "Usuario" -->
+                        <input type="hidden" name="Rol" value="Usuario" />
+
+                        <div class="form-group d-grid gap-2">
+                            <button type="submit" class="btn btn-success btn-block">Registrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
