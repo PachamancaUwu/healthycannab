@@ -1,0 +1,57 @@
+@model healthycannab.Models.CarritoCompras
+
+<h2>Carrito de Compras</h2>
+
+<div class="container">
+    @if (Model?.Items == null || Model.Items.Count == 0)
+    {
+        <p>No hay productos en el carrito.</p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Subtotal</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>@item.Producto.Descripcion</td>
+                        <td>$@item.Producto.Precio</td>
+                        <td>
+                            <form asp-controller="CarritoCompras" asp-action="ActualizarCantidad" method="post">
+                                <input type="hidden" name="productoId" value="@item.ProductoId" />
+                                <input type="number" name="cantidad" value="@item.Cantidad" min="1" />
+                                <button type="submit" class="btn btn-primary">Actualizar</button>
+                            </form>
+                        </td>
+                        <td>$@(item.Producto.Precio * item.Cantidad)</td>
+                        <td>
+                            <form asp-controller="CarritoCompras" asp-action="Eliminar" method="post">
+                                <input type="hidden" name="productoId" value="@item.ProductoId" />
+                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="mt-3">
+            <strong>Total: $@Model.Total</strong>
+        </div>
+
+        <div class="mt-4">
+            <form asp-controller="CarritoCompras" asp-action="SimularPago" method="post">
+                <button type="submit" class="btn btn-success">Simular Pago</button>
+            </form>
+        </div>
+    }
+</div>

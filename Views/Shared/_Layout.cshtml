@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - HealthyCannab</title>
-
+    
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/styleContacto.css">
@@ -38,6 +38,11 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Nosotros" asp-action="Index">Nosotros</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="CarritoCompras" asp-action="CarritoCompras" class="nav-link text-dark" style="margin-left: auto;">
+                                <img src="~/img/icons/carritocompras.png" alt="Carrito" style="height: 20px; width: auto;"> Carrito de compras
+                            </a>
                         </li>
                     </ul>
                     <!--<partial name="_LoginPartial" />-->

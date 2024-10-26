@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using healthycannab.Data;
@@ -11,9 +12,11 @@ using healthycannab.Data;
 namespace healthycannab.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241026010726_tablaProducto")]
+    partial class tablaProducto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -277,48 +280,6 @@ namespace healthycannab.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("producto");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Descripcion = "Aceite de cannabis 100% puro",
-                            ImagenUrl = "/img/a.png",
-                            Nombre = "Producto 1",
-                            Precio = 150m
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Descripcion = "Ungüento de cannabis",
-                            ImagenUrl = "/img/b.jpg",
-                            Nombre = "Producto 2",
-                            Precio = 120m
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Descripcion = "Cannabis CBD cannabidiol",
-                            ImagenUrl = "/img/canabis3.png",
-                            Nombre = "Producto 3",
-                            Precio = 95m
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Descripcion = "Cannabis To you",
-                            ImagenUrl = "/img/canabis4.png",
-                            Nombre = "Producto 4",
-                            Precio = 105m
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Descripcion = "Cannabis Gotas",
-                            ImagenUrl = "/img/cannabisGotas.jpg",
-                            Nombre = "Producto 5",
-                            Precio = 99m
-                        });
                 });
 
             modelBuilder.Entity("healthycannab.Models.Usuario", b =>

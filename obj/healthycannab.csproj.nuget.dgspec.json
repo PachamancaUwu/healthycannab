@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ASUS\\Documents\\ProgramacionI\\proyecto\\healthycannab\\healthycannab.csproj": {}
+    "C:\\Users\\ASUS\\Documents\\ProgramacionI\\healthycannab\\healthycannab.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ASUS\\Documents\\ProgramacionI\\proyecto\\healthycannab\\healthycannab.csproj": {
+    "C:\\Users\\ASUS\\Documents\\ProgramacionI\\healthycannab\\healthycannab.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ASUS\\Documents\\ProgramacionI\\proyecto\\healthycannab\\healthycannab.csproj",
+        "projectUniqueName": "C:\\Users\\ASUS\\Documents\\ProgramacionI\\healthycannab\\healthycannab.csproj",
         "projectName": "healthycannab",
-        "projectPath": "C:\\Users\\ASUS\\Documents\\ProgramacionI\\proyecto\\healthycannab\\healthycannab.csproj",
+        "projectPath": "C:\\Users\\ASUS\\Documents\\ProgramacionI\\healthycannab\\healthycannab.csproj",
         "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ASUS\\Documents\\ProgramacionI\\proyecto\\healthycannab\\obj\\",
+        "outputPath": "C:\\Users\\ASUS\\Documents\\ProgramacionI\\healthycannab\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config"
