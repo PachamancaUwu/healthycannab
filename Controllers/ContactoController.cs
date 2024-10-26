@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using healthycannab.Models;
 using healthycannab.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace healthycannab.Controllers
 {
@@ -26,31 +28,39 @@ namespace healthycannab.Controllers
 
         
         [HttpGet]
-        public IActionResult Contacto()
+        public async Task<IActionResult> Contacto()
         {
-            return View();
+            var usuario = await _context.DataUsuario.FirstOrDefaultAsync(c => c.Correo == User.Identity.Name);
+            var contacto = new Contacto();
+            if (User.Identity.IsAuthenticated)
+            {
+                contacto.Correo = usuario.Correo;
+                contacto.Celular = usuario.Celular;
+                contacto.Nombre = usuario.Nombre;
+            }
+            return View(contacto);
         }
 
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Contacto(Contacto model)
+        public async Task<IActionResult> Contacto(Contacto contacto)
         {
             if (ModelState.IsValid) 
             {
-                _context.Add(model); 
-                await _context.SaveChangesAsync(); 
-              //  await EnviarCorreoAsync(model); //Enviamos el correo
-                
+
+                _context.Add(contacto); // Agrega el modelo al contexto
+                await _context.SaveChangesAsync(); // Guarda los cambios en la base de datos
+
+                // Mensaje de éxito
                 ViewBag.Message = "Gracias por contactarnos. Te responderemos pronto.";
                 
                 
                 ModelState.Clear(); 
                 return View();
             }
-
-            
-            return View(model);
+            // Si el modelo no es válido, vuelve a mostrar el formulario con los mensajes de error
+            return View(contacto);
         }
 
         /*

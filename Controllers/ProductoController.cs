@@ -27,7 +27,7 @@ namespace healthycannab.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public IActionResult Producto()
         {
             var productos = _context.DataProducto.ToList();
             return View(productos);
