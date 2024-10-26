@@ -1,0 +1,132 @@
+@{
+    ViewData["Title"] = "Blog - Página 2";
+    Layout = User.Identity.IsAuthenticated ? "~/Views/Shared/_layoutLogin.cshtml" : "~/Views/Shared/_layout.cshtml";
+
+}
+
+<!-- Importar Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- Estilos personalizados específicos -->
+<style>
+    body {
+        
+        background-color: #f1f3f5;
+    }
+    
+    #blog2-container {
+        background-color: white;
+        font-family: 'Lora', serif;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    #blog2-header h1, #blog2-header p {
+        color: #2c3e50;
+    }
+    
+    .blog2-title {
+        font-size: 2.5rem;
+        color: #2c3e50;
+    }
+    
+    .blog2-paragraph {
+        font-size: 1.1rem;
+        color: #495057;
+    }
+    
+    .blog2-image {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn-blog2-primary {
+        background-color: #5a6268;
+        border: none;
+    }
+    
+    .btn-blog2-primary:hover {
+        background-color: #495057;
+    }
+    
+    .pagination-blog2 .page-link {
+        color: #5a6268;
+    }
+    
+    .pagination-blog2 .page-link:hover {
+        background-color: #f1f3f5;
+    }
+</style>
+
+<!-- Contenedor principal -->
+<div id="blog2-container" class="container mt-5">
+    <!-- Encabezado del blog -->
+    <div id="blog2-header" class="text-center mb-5">
+        <h1 class="display-4 blog2-title">Tipos de administracion del cannabis medicinal</h1>
+        <p class="lead"><strong>3 formas de aplicarlo</strong></p>
+    </div>
+
+    <!-- Artículo de blog 1 -->
+    <div class="row align-items-center mb-5">
+        <!-- Imagen destacada -->
+        <div class="col-md-7 order-md-2">
+            <img src="~/img/blogg1.png" class="img-fluid rounded blog2-image" alt="Imagen de ejercicio">
+        </div>
+        <!-- Contenido del blog -->
+        <div class="col-md-5 order-md-1">
+            <h3 class="mb-3">Inhalación</h3>
+            <p class="blog2-paragraph">
+                Una de las formas más comunes de administrar cannabis medicinal es mediante la <strong>inhalación</strong>, que permite efectos casi inmediatos. Al inhalar cannabis, los compuestos activos como el <strong>THC y el CBD</strong> pasan rápidamente a los pulmones y luego al torrente sanguíneo, lo cual facilita un alivio rápido de síntomas como el dolor o la ansiedad. La inhalación se puede hacer mediante <strong>vaporizadores o cigarrillos</strong>; sin embargo, se suele recomendar el uso de vaporizadores para evitar los efectos nocivos del humo.
+            </p>
+            <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9536813/" class="btn btn-blog2-primary">Leer más</a>
+        </div>
+    </div>
+
+    <!-- Artículo de blog 2 -->
+    <div class="row align-items-center mb-5">
+        <!-- Imagen destacada -->
+        <div class="col-md-7">
+            <img src="~/img/blogg2.png" class="img-fluid rounded blog2-image" alt="Imagen de salud física">
+        </div>
+        <!-- Contenido del blog -->
+        <div class="col-md-5">
+            <h3 class="mb-3">Vía Oral</h3>
+            <p class="blog2-paragraph">
+                El consumo oral de cannabis incluye productos como <strong>aceites, cápsulas y comestibles</strong>, que el paciente ingiere directamente. A diferencia de la inhalación, la administración oral suele tardar más en hacer efecto, ya que el cannabis debe pasar por el sistema digestivo y luego metabolizarse en el hígado antes de entrar al torrente sanguíneo. Los efectos pueden durar de <strong>6 a 8 horas</strong>, lo cual es útil para pacientes que necesitan alivio prolongado de síntomas como dolor crónico o problemas de sueño.
+            </p>
+            <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9536813/" class="btn btn-blog2-primary">Leer más</a>
+        </div>
+    </div>
+
+    <!-- Artículo de blog 3 -->
+    <div class="row align-items-center mb-5">
+        <!-- Imagen destacada -->
+        <div class="col-md-7 order-md-2">
+            <img src="~/img/blogg3.png" class="img-fluid rounded blog2-image" alt="Imagen de sueño">
+        </div>
+        <!-- Contenido del blog -->
+        <div class="col-md-5 order-md-1">
+            <h3 class="mb-3">Aplicación Tópica</h3>
+            <p class="blog2-paragraph">
+                Los productos de cannabis aplicados de forma tópica, como <strong>cremas, ungüentos y lociones</strong>, son una opción popular para tratar el dolor localizado y la inflamación sin causar efectos psicoactivos. Estos productos actúan directamente en la piel y los músculos, lo que permite el alivio de zonas específicas sin afectar el resto del cuerpo. La aplicación tópica es ideal para pacientes con <strong>dolor muscular o artritis</strong> que desean evitar los efectos sistémicos del cannabis.
+            </p>
+            <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9536813/" class="btn btn-blog2-primary">Leer más</a>
+        </div>
+    </div>
+
+    <!-- Paginación -->
+    <nav aria-label="Paginación de blog" class="pagination-blog2">
+        <ul class="pagination justify-content-center">
+            <li class="page-item">
+            </li>
+            <li class="page-item"><a  asp-area="" asp-controller="Blog" asp-action="Blog" class="page-link">1</a></li>
+            <li class="page-item"><a  asp-area="" asp-controller="Blog" asp-action="Blog2" class="page-link">2</a></li>
+            <li class="page-item">
+                <a asp-area="" asp-controller="Blog" asp-action="Blog" class="page-link">Siguiente</a>
+            </li>
+        </ul>
+    </nav>
+</div>

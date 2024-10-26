@@ -10,7 +10,7 @@ using healthycannab.Models;
 namespace healthycannab.Controllers
 {
     //[Route("[controller]")]
-    public class ProductoController : Controller
+    public class ProductoController : BaseController
     {
         //private readonly ILogger<ProductoController> _logger;
 

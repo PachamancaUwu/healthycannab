@@ -11,7 +11,7 @@ using healthycannab.Data;
 namespace healthycannab.Controllers
 {
     
-    public class ContactoController : Controller
+    public class ContactoController : BaseController
     {
        private readonly ILogger<ContactoController> _logger;
         private readonly ApplicationDbContext _context; // Contexto de la base de datos

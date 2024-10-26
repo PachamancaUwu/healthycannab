@@ -9,6 +9,11 @@ using healthycannab.Models;
 using healthycannab.Data;
 using healthycannab.Services;
 
+
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+
 namespace healthycannab.Controllers
 {
    public class InicioSesionController : Controller
@@ -80,22 +85,35 @@ namespace healthycannab.Controllers
 
         if (usuario != null)
         {
+            // Crear los claims de autenticación
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, usuario.Correo),
+                new Claim(ClaimTypes.Role, usuario.Rol)
+            };
+
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            // Crear la cookie de autenticación
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+
+            // Redirigir según el rol del usuario
             if (usuario.Rol == "Administrador")
             {
-                return RedirectToAction("Index", "Admin");  
+                return RedirectToAction("Blog", "blog");
             }
-            return RedirectToAction("Index", "Home");  
+            return RedirectToAction("blog", "Blog");
         }
         else
         {
             ViewBag.Error = "Credenciales incorrectas.";
+            return View();
         }
-
-        return View();
     }
 
-    public IActionResult Logout()
+    public async Task<IActionResult> Logout()
     {
+        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         return RedirectToAction("Login");
     }
 }
