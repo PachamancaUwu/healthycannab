@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 using healthycannab.Models;
 using healthycannab.Data;
 using Microsoft.EntityFrameworkCore;
-using healthycannab.Service;
+using healthycannab.Services;
 
 namespace healthycannab.Controllers
 {
@@ -44,7 +44,7 @@ namespace healthycannab.Controllers
         //     return View(productos);
         // }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Producto()
         {
             var productos = await _productoService.GetAll();
             return View(productos);
