@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using healthycannab.Models;
+using healthycannab.Data; 
 
 namespace healthycannab.Controllers
 {
@@ -19,16 +20,16 @@ namespace healthycannab.Controllers
             _logger = logger;
         }*/
 
+        private readonly ApplicationDbContext _context;
+
+        public ProductoController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Producto()
         {
-            var productos = new List<Producto>
-        {
-            new Producto { Id = 1, Nombre = "Producto 1", Descripcion = "Aceite de cannabis 100% puro", Precio = 150, ImagenUrl = "/img/a.png" },
-            new Producto { Id = 2, Nombre = "Producto 2", Descripcion = "Unguento de cannabis", Precio = 120, ImagenUrl = "/img/b.jpg" },
-            new Producto { Id = 3, Nombre = "Producto 3", Descripcion = "Cannabis CBD cannabidiol", Precio = 95, ImagenUrl = "/img/canabis3.png" },
-            new Producto { Id = 3, Nombre = "Producto 4", Descripcion = "Cannabis To you", Precio = 105, ImagenUrl = "/img/canabis4.png" },
-            new Producto { Id = 3, Nombre = "Producto 5", Descripcion = "Cannabis Gotas", Precio = 99, ImagenUrl = "/img/cannabisGotas.jpg" }
-        };
+            var productos = _context.DataProducto.ToList();
             return View(productos);
         }
 

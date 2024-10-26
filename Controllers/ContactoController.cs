@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net; //Necesario para el envio de correo
+using System.Net.Mail; //Necesario para el envio de correo
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -16,15 +18,15 @@ namespace healthycannab.Controllers
     public class ContactoController : Controller
     {
        private readonly ILogger<ContactoController> _logger;
-        private readonly ApplicationDbContext _context; // Contexto de la base de datos
+        private readonly ApplicationDbContext _context;
 
         public ContactoController(ILogger<ContactoController> logger, ApplicationDbContext context)
         {
             _logger = logger;
-            _context = context; // Inicializa el contexto
+            _context = context;
         }
 
-        // GET: Muestra el formulario de contacto
+        
         [HttpGet]
         public async Task<IActionResult> Contacto()
         {
@@ -39,28 +41,59 @@ namespace healthycannab.Controllers
             return View(contacto);
         }
 
-        // POST: Procesa los datos del formulario de contacto y los guarda en la base de datos
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Contacto(Contacto contacto)
         {
-            if (ModelState.IsValid) // Valida que el modelo sea correcto
+            if (ModelState.IsValid) 
             {
+
                 _context.Add(contacto); // Agrega el modelo al contexto
                 await _context.SaveChangesAsync(); // Guarda los cambios en la base de datos
 
                 // Mensaje de éxito
                 ViewBag.Message = "Gracias por contactarnos. Te responderemos pronto.";
                 
-                // Limpiar el modelo después de guardar
-                ModelState.Clear(); // Esto limpia los datos del modelo
-                return View(); // Regresa a la vista Contacto para mostrar el mensaje
+                
+                ModelState.Clear(); 
+                return View();
             }
-
             // Si el modelo no es válido, vuelve a mostrar el formulario con los mensajes de error
             return View(contacto);
         }
 
+        /*
+        //Método para enviar el correo
+        private async Task EnviarCorreoAsync(Contacto model)
+            {
+                var fromAddress = new MailAddress("healthycannabis0@gmail.com", "HealthyCannabis");
+                var toAddress = new MailAddress(model.Correo, model.Nombre);
+                const string fromPassword = "healthycannab1";
+                const string subject = "Confirmación de contacto";
+                string body = $"Gracias por contactarnos, {model.Nombre}. Hemos recibido tu mensaje:\n\n{model.Mensaje}";
+
+                var smtp = new SmtpClient
+                {
+                    Host = "smtp.gmail.com",
+                    Port = 587,
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+                };
+
+                using (var message = new MailMessage(fromAddress, toAddress)
+                {
+                    Subject = subject,
+                    Body = body
+                })
+                {
+                    await smtp.SendMailAsync(message);
+                }
+            }
+
+        */
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

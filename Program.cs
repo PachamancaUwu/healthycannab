@@ -4,11 +4,8 @@ using healthycannab.Data;
 using healthycannab.Services;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
-
-
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,6 +29,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 
 builder.Services.AddControllersWithViews();
+
+//Pago Paypal
+builder.Services.AddScoped<PayPalService>();
 
 builder.Services.AddHttpClient<EmailValidation>(); // Agregar HttpClient para EmailValidation
 builder.Services.AddControllersWithViews();   // Agregar soporte para controladores y vistas
