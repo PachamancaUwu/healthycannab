@@ -7,11 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using healthycannab.Models;
 using healthycannab.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace healthycannab.Controllers
 {
     
-    public class ContactoController : BaseController
+    public class ContactoController : Controller
     {
        private readonly ILogger<ContactoController> _logger;
         private readonly ApplicationDbContext _context; // Contexto de la base de datos
@@ -24,19 +26,27 @@ namespace healthycannab.Controllers
 
         // GET: Muestra el formulario de contacto
         [HttpGet]
-        public IActionResult Contacto()
+        public async Task<IActionResult> Contacto()
         {
-            return View();
+            var usuario = await _context.DataUsuario.FirstOrDefaultAsync(c => c.Correo == User.Identity.Name);
+            var contacto = new Contacto();
+            if (User.Identity.IsAuthenticated)
+            {
+                contacto.Correo = usuario.Correo;
+                contacto.Celular = usuario.Celular;
+                contacto.Nombre = usuario.Nombre;
+            }
+            return View(contacto);
         }
 
         // POST: Procesa los datos del formulario de contacto y los guarda en la base de datos
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Contacto(Contacto model)
+        public async Task<IActionResult> Contacto(Contacto contacto)
         {
             if (ModelState.IsValid) // Valida que el modelo sea correcto
             {
-                _context.Add(model); // Agrega el modelo al contexto
+                _context.Add(contacto); // Agrega el modelo al contexto
                 await _context.SaveChangesAsync(); // Guarda los cambios en la base de datos
 
                 // Mensaje de éxito
@@ -48,7 +58,7 @@ namespace healthycannab.Controllers
             }
 
             // Si el modelo no es válido, vuelve a mostrar el formulario con los mensajes de error
-            return View(model);
+            return View(contacto);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

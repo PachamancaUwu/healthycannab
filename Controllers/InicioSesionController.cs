@@ -96,13 +96,14 @@ namespace healthycannab.Controllers
 
             // Crear la cookie de autenticación
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-
-            // Redirigir según el rol del usuario
+            return RedirectToAction("Inicio","Main");
+            /* Redirigir según el rol del usuario
             if (usuario.Rol == "Administrador")
             {
                 return RedirectToAction("Blog", "blog");
             }
             return RedirectToAction("blog", "Blog");
+            */
         }
         else
         {
@@ -114,7 +115,7 @@ namespace healthycannab.Controllers
     public async Task<IActionResult> Logout()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        return RedirectToAction("Login");
+        return RedirectToAction("Inicio","Main");
     }
 }
 

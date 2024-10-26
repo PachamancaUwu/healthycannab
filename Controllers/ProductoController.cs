@@ -10,7 +10,7 @@ using healthycannab.Models;
 namespace healthycannab.Controllers
 {
     //[Route("[controller]")]
-    public class ProductoController : BaseController
+    public class ProductoController : Controller
     {
         //private readonly ILogger<ProductoController> _logger;
 
@@ -19,7 +19,7 @@ namespace healthycannab.Controllers
             _logger = logger;
         }*/
 
-        public IActionResult Index()
+        public IActionResult Producto()
         {
             var productos = new List<Producto>
         {

@@ -12,7 +12,7 @@ using healthycannab.Controllers;
 
 namespace healthycannab.Controllers
 {
-    public class BlogController : BaseController
+    public class BlogController : Controller
     {
         public IActionResult Blog()
         {

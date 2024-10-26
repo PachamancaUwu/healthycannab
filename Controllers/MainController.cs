@@ -4,7 +4,7 @@ using healthycannab.Models;
 
 namespace healthycannab.Controllers;
 
-public class MainController : BaseController
+public class MainController : Controller
 {
     private readonly ILogger<MainController> _logger;
 

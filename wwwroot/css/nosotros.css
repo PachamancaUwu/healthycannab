@@ -1,23 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
 
-.d-flex,
-#btn {
-  margin-left: 20px;
-}
-#btn {
-  color: #07c8be;
-  border: 2px solid #07c8be;
-  background-color: #fff;
-  border-radius: 6px;
-  padding: 5px 15px;
-}
-#btn:hover {
-  color: #fff;
-  background-color: #07c8be;
-}
-#titulo_hd {
-  color: #07c8be;
-}
 #link {
   font-size: 15px;
   position: relative;
@@ -227,7 +209,7 @@ ul.about-content {
 
 /* ? */
 .msg-area {
-  background: linear-gradient(#46994190, rgba(0, 0, 0, 0.8)),
+  background: linear-gradient(#75757590, rgba(0, 0, 0, 0.8)),
     url(../img/nosotros/mision_banner.jpg);
   -webkit-background-size: cover;
   background-size: cover;
@@ -284,7 +266,6 @@ a {
   width: 325px;
   height: 450px;
   overflow: hidden;
-  box-shadow: 5px 5px 20px rgba(7, 227, 29, 0.3);
   transform: translate(0, 0);
   transition: 0.3s;
 }
@@ -307,11 +288,7 @@ a {
   background-position: center center;
 }
 .img-text {
-  background: linear-gradient(
-    to top,
-    rgba(114, 189, 107, 0.9),
-    rgba(252, 246, 246, 0.293)
-  );
+  background: rgba(255, 255, 255, 0.8);
   padding: 0 10px 5px 10px;
   width: 100%;
   height: auto;

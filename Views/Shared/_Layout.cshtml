@@ -28,7 +28,7 @@
                     <a class="nav-link text-dark" asp-area="" asp-controller="Main" asp-action="Inicio">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Producto" asp-action="Index">Catálogo</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Producto" asp-action="Producto">Catálogo</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-dark" asp-area="" asp-controller="Contacto" asp-action="Contacto">Contacto</a>
@@ -40,18 +40,13 @@
                     <a class="nav-link text-dark" asp-area="" asp-controller="Nosotros" asp-action="Nosotros">Nosotros</a>
                 </li>
             </ul>
-
-            <!-- Botones Iniciar Sesión y Registrarse con estilo profesional -->
-            <div class="d-flex align-items-center">
-                <a class="btn btn-outline-dark me-2" style="border-color: #4a4e69; color: #4a4e69;" asp-area="" asp-controller="InicioSesion" asp-action="Login">Iniciar Sesión</a>
-                <a class="btn btn-outline-dark" style="border-color: #4a4e69; color: #4a4e69;" asp-area="" asp-controller="InicioSesion" asp-action="Registro">Registrarse</a>
-            </div>
+            <partial name="_LoginPartial" />
         </div>
     </div>
 </nav>
 </header>
 
-    <div class="container">
+    <div>
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -110,25 +105,6 @@
                             </p>
                         </div>
                     </div>
-                    <div class="row d-flex justify-content-center">
-                        <div class="text-center">
-                          <ul class="list-unstyled list-inline">
-                              <li class="list-inline-item">
-                                  <a href="#" class="text-dark"><i id="red1" class=""></i></a>
-                              </li>
-                              <li class="list-inline-item">
-                                  <a href="#" class="text-dark"><i id="red3" class=""></i></a>
-                              </li>
-                              <li class="list-inline-item">
-                                  <a href="#" class="text-dark"><i id="red2" class=""></i></a>
-                              </li>
-                              <li class="list-inline-item">
-                                  <a href="#" class="text-dark"><i id="red4" class=""></i></a>
-                              </li>
-                          </ul>
-                        </div>
-                    </div>
-                </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

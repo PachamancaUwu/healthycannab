@@ -9,7 +9,7 @@ using healthycannab.Models;
 
 namespace healthycannab.Controllers
 {
-    public class NosotrosController : BaseController
+    public class NosotrosController : Controller
     {
         private readonly ILogger<NosotrosController> _logger;
 

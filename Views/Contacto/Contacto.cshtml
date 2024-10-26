@@ -2,8 +2,6 @@
 
 @{
     ViewData["Title"] = "Contacto";
-    Layout = User.Identity.IsAuthenticated ? "~/Views/Shared/_layoutLogin.cshtml" : "~/Views/Shared/_layout.cshtml";
-
 }
 
 <h2>Contáctanos</h2>
@@ -13,21 +11,21 @@
     <div class="form-group">
         <label asp-for="Nombre" class="control-label">Nombre</label>
         
-        <input asp-for="Nombre" class="form-control" placeholder="Ingresa tu nombre aquí" />
+        <input asp-for="Nombre" class="form-control" placeholder="Ingresa tu nombre aquí" value="@Model.Nombre"/>
         <span asp-validation-for="Nombre" class="text-danger"></span>
     </div>
     
     <div class="form-group">
         <label asp-for="Correo" class="control-label">Correo Electrónico</label>
         
-        <input asp-for="Correo" class="form-control" type="email" placeholder="Ingresa tu email aquí" />
+        <input asp-for="Correo" class="form-control" type="email" placeholder="Ingresa tu email aquí" value="@Model.Correo"/>
         <span asp-validation-for="Correo" class="text-danger"></span>
     </div>
     
     <div class="form-group">
         <label asp-for="Celular" class="control-label">Celular</label>
         
-        <input asp-for="Celular" class="form-control" placeholder="Ingresa tu celular aquí" />
+        <input asp-for="Celular" class="form-control" placeholder="Ingresa tu celular aquí" value="@Model.Celular"/>
         <span asp-validation-for="Celular" class="text-danger"></span>
     </div>
     
