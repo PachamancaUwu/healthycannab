@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using healthycannab.Data;
+using healthycannab.Services;
+using System.Net.Http;
+using Newtonsoft.Json.Linq;
 
 
 using Microsoft.AspNetCore.Authentication;
@@ -29,6 +32,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddHttpClient<EmailValidation>(); // Agregar HttpClient para EmailValidation
+builder.Services.AddControllersWithViews();   // Agregar soporte para controladores y vistas
 
 var app = builder.Build();
 
