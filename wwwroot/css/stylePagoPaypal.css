@@ -1,0 +1,15 @@
+.btn-paypal {
+  background-color: #0070ba; /* Color de PayPal */
+  color: white; /* Texto blanco */
+  padding: 10px 20px; /* Espaciado */
+  border: none; /* Sin borde */
+  border-radius: 5px; /* Bordes redondeados */
+  font-size: 16px; /* Tamaño de fuente */
+  cursor: pointer; /* Cambiar el cursor al pasar por encima */
+  transition: background-color 0.3s; /* Transición suave para el hover */
+  text-align: center; /* Alinear texto */
+}
+
+.btn-paypal:hover {
+  background-color: #005ea6; /* Color más oscuro al pasar el mouse */
+}

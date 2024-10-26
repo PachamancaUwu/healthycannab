@@ -7,23 +7,25 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
 using healthycannab.Models;
 using healthycannab.Data; 
+using healthycannab.Services;
+using PayPal.Api;
+using Microsoft.Extensions.Configuration;
 
+// CarritoComprasController.cs
 namespace healthycannab.Controllers
 {
     public class CarritoComprasController : Controller
     {
-        
-
+        private readonly PayPalService _payPalService;
         private readonly ApplicationDbContext _context;
         private static CarritoCompras _carrito = new CarritoCompras();
 
-        public CarritoComprasController(ApplicationDbContext context)
+        public CarritoComprasController(ApplicationDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _payPalService = new PayPalService(configuration); // Inicializar PayPalService aquí
         }
 
-
-        
         [HttpPost]
         public IActionResult Agregar(int productoId)
         {
@@ -31,7 +33,7 @@ namespace healthycannab.Controllers
             
             if (producto == null)
             {
-                return NotFound();
+                return NotFound(); // Manejo de error si el producto no se encuentra
             }
 
             var item = _carrito.Items.FirstOrDefault(i => i.ProductoId == productoId);
@@ -48,51 +50,83 @@ namespace healthycannab.Controllers
             return RedirectToAction("Index", "Producto");
         }
 
-        // Método para ver el carrito
+    [HttpPost]
+    public IActionResult ActualizarCantidad(int productoId, int cantidad)
+    {
+        var item = _carrito.Items.FirstOrDefault(i => i.ProductoId == productoId);
+        
+        if (item != null)
+        {
+            item.Cantidad = cantidad;
+        }
+
+        return RedirectToAction("CarritoCompras");
+    }
+
+    public IActionResult Eliminar(int productoId)
+    {
+        var item = _carrito.Items.FirstOrDefault(i => i.ProductoId == productoId);
+        
+        if (item != null)
+        {
+            _carrito.Items.Remove(item);
+        }
+
+        return RedirectToAction("CarritoCompras");
+    }
+        
         public IActionResult CarritoCompras()
         {
             return View(_carrito); 
         }
 
-        // Método para simular el pago
-        public IActionResult SimularPago()
-        {
-            // Aquí puedes redirigir a PayPal o mostrar un mensaje de éxito
-            return Content("Pago simulado exitosamente.");
-        }
 
-        public IActionResult VaciarCarrito()
+        [HttpPost]
+        public IActionResult CreatePayment()
         {
-            _carrito.Items.Clear();
-            return RedirectToAction("Index");
-        }
+            var total = _carrito.Items.Sum(i => i.Producto.Precio * i.Cantidad);
+            var currency = "USD"; // Puedes hacerlo dinámico si es necesario
+            var returnUrl = Url.Action("Success", "CarritoCompras", null, Request.Scheme);
+            var cancelUrl = Url.Action("Cancel", "CarritoCompras", null, Request.Scheme);
 
-        
-       [HttpPost]
-        public IActionResult ActualizarCantidad(int productoId, int cantidad)
-        {
-            var item = _carrito.Items.FirstOrDefault(i => i.ProductoId == productoId);
-            
-            if (item != null)
+            var payment = _payPalService.CreatePayment(total, currency, returnUrl, cancelUrl);
+            var approvalUrl = payment.links.FirstOrDefault(link => link.rel.Equals("approval_url", StringComparison.OrdinalIgnoreCase))?.href;
+
+            if (approvalUrl != null)
             {
-                item.Cantidad = cantidad;
+                return Redirect(approvalUrl);
             }
 
-            return RedirectToAction("CarritoCompras");
+            return View("Error");
         }
 
-       
-         public IActionResult Eliminar(int productoId)
+        [HttpGet]
+        public IActionResult Success(string paymentId, string token, string PayerID)
         {
-            var item = _carrito.Items.FirstOrDefault(i => i.ProductoId == productoId);
-            
-            if (item != null)
+            var paymentExecution = new PaymentExecution { payer_id = PayerID };
+            var payment = Payment.Get(_payPalService.ApiContext, paymentId);
+
+            // Ejecutar el pago
+            var executedPayment = payment.Execute(_payPalService.ApiContext, paymentExecution);
+
+            if (executedPayment.state.ToLower() != "approved")
             {
-                _carrito.Items.Remove(item);
+                return View("Error");
             }
 
-            return RedirectToAction("CarritoCompras");
+             _carrito.Items.Clear(); 
+
+            // Aquí puedes guardar la información de la transacción en tu base de datos
+            
+            return View("Success", executedPayment); // Puedes pasar el objeto `executedPayment` si lo deseas
         }
 
+
+        public IActionResult Cancel()
+        {
+            return View();
+        }
     }
 }
+
+

@@ -1,0 +1,10 @@
+@{
+    ViewData["Title"] = "Pago Cancelado";
+}
+
+<h1>Pago Cancelado</h1>
+<p>Lamentamos que su pago haya sido cancelado.</p>
+<p>Si desea intentar nuevamente, puede volver a la página de pago.</p>
+
+<a href="@Url.Action("CreatePayment", "CarritoCompras")">Volver a pagar</a>
+<a href="@Url.Action("Inicio", "Main")">Volver a la página principal</a>

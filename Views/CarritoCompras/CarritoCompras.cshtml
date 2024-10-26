@@ -1,7 +1,7 @@
 @model healthycannab.Models.CarritoCompras
 
 <h2>Carrito de Compras</h2>
-
+ <script src="https://sandbox.paypal.com/sdk/js?client-id=AY6eqNjS6nOysJuVNZ1nLEkEh996VA_w1nip0p_QfuH3GgkP6TpixcAxTJcJiPVP9Nlv5rsZ6UEviQ8z"></script>
 <div class="container">
     @if (Model?.Items == null || Model.Items.Count == 0)
     {
@@ -48,10 +48,18 @@
             <strong>Total: $@Model.Total</strong>
         </div>
 
-        <div class="mt-4">
-            <form asp-controller="CarritoCompras" asp-action="SimularPago" method="post">
-                <button type="submit" class="btn btn-success">Simular Pago</button>
-            </form>
-        </div>
+        <div class="mt-4 text-center">
+                <form asp-controller="CarritoCompras" asp-action="CreatePayment" method="post"> <!-- Cambia a POST -->
+                    <input type="hidden" name="total" value="@Model.Total" />
+                    
+                    <input type="hidden" name="items" value="@Html.Raw(Json.Serialize(Model.Items))" /> <!-- Opcional -->
+                    <button type="submit" class="btn btn-paypal">Pagar con PayPal</button>
+                </form>
+            </div>
+        
+       
+        
+         <div id="paypal-button-container"></div>
+        
     }
 </div>
