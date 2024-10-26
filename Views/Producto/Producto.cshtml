@@ -13,10 +13,13 @@
                         <h5 class="card-title">@product.Nombre</h5>
                         <p class="card-text">@product.Descripcion</p>
                         <p class="card-text"><strong>Precio: $@product.Precio</strong></p>
+                        @if (User.Identity.IsAuthenticated)
+                        {
                         <form asp-controller="CarritoCompras" asp-action="Agregar" method="post">
                             <input type="hidden" name="productoId" value="@product.Id" />
                             <button type="submit" class="btn btn-primary">Añadir al Carrito</button>
                         </form>
+                        }
                     </div>
                 </div>
             </div>
@@ -25,5 +28,12 @@
 </div>
 
 <div class="mt-4">
+    @if (User.Identity.IsAuthenticated)
+    {
     <a asp-controller="CarritoCompras" asp-action="CarritoCompras" class="btn btn-success">Ver Carrito</a>
+    }
+    else
+    {
+    <span>¡Necesitas Iniciar Sesión para comprar! >:(</span>
+    }
 </div>
