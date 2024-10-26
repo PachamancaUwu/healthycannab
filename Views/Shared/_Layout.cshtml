@@ -4,55 +4,50 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - HealthyCannab</title>
-
+    
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/styleContacto.css">
+        <link rel="stylesheet" href="~/css/stylePagoPaypal.css">
     <link rel="stylesheet" href="~/healthycannab.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body >
-    <header>
-         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Main" asp-action="Inicio">
-                    <img src="~/img/logo.png" alt="HealthyCannab Logo" height="50px">
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Main" asp-action="Inicio">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Producto" asp-action="Index">Catálogo</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Main" asp-action="Inicio">Blog</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Main" asp-action="Inicio">Contacto</a>
-                        </li>
-                        <li class="nav-item">
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container-fluid">
+        <a class="navbar-brand" asp-area="" asp-controller="Main" asp-action="Inicio">
+            <img src="~/img/logo.png" alt="HealthyCannab Logo" height="50px">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Main" asp-action="Inicio">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Producto" asp-action="Producto">Catálogo</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Contacto" asp-action="Contacto">Contacto</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Blog" asp-action="Blog">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Nosotros" asp-action="Nosotros">Nosotros</a>
+                </li>
+            </ul>
+            <partial name="_LoginPartial" />
+        </div>
+    </div>
+</nav>
+</header>
 
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Main" asp-action="Inicio">Nosotros</a>
-                        </li>    
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Producto" asp-action="Chat">Chat</a>
-                        </li>                    
-
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Nosotros" asp-action="Index">Nosotros</a>
-                        </li>
-
-                    </ul>
-                    <!--<partial name="_LoginPartial" />-->
-                </div>
-            </div>
-        </nav>
-
-    </header>
-    <div class="container">
+    <div>
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -111,30 +106,12 @@
                             </p>
                         </div>
                     </div>
-                    <div class="row d-flex justify-content-center">
-                        <div class="text-center">
-                          <ul class="list-unstyled list-inline">
-                              <li class="list-inline-item">
-                                  <a href="#" class="text-dark"><i id="red1" class=""></i></a>
-                              </li>
-                              <li class="list-inline-item">
-                                  <a href="#" class="text-dark"><i id="red3" class=""></i></a>
-                              </li>
-                              <li class="list-inline-item">
-                                  <a href="#" class="text-dark"><i id="red2" class=""></i></a>
-                              </li>
-                              <li class="list-inline-item">
-                                  <a href="#" class="text-dark"><i id="red4" class=""></i></a>
-                              </li>
-                          </ul>
-                        </div>
-                    </div>
-                </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

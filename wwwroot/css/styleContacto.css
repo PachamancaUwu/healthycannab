@@ -1,0 +1,33 @@
+body {
+  background-color: #e0f7e9; /* Fondo verde claro */
+}
+
+h2 {
+  color: #4ab955;
+  text-align: center;
+}
+
+form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-control {
+  border: 1px solid #4ab955;
+  border-radius: 5px;
+}
+
+label {
+  color: #4ab955;
+}
+
+button {
+  background-color: #4ab955;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+}

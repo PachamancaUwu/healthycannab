@@ -1,41 +1,49 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using healthycannab.Data;
-using healthycannab.Hubs;
+using healthycannab.Services;
+using System.Net.Http;
+using Newtonsoft.Json.Linq;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.OpenApi.Models;
-using healthycannab.Service;
+using healthycannab.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-//Configuracion de la cadena de conexion
+// Configuración de la cadena de conexión
 var connectionString = builder.Configuration.GetConnectionString("PostgreSQLConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-//identity
+// Configuración de identidad con autenticación basada en cookies
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
-
 // Configuración de CORS
 builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAll",
-        policy =>
-        {
-            policy.AllowAnyOrigin()
-                  .AllowAnyMethod()
-                  .AllowAnyHeader();
-        });
-});
+    {
+        options.AddPolicy("AllowAll",
+            policy =>
+            {
+                policy.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            });
+    });
 
 builder.Services.AddTransient<ProductoService>();
-
 //servicios de signalR
 builder.Services.AddSignalR();
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/InicioSesion/Login";  // Página de inicio de sesión
+        options.LogoutPath = "/InicioSesion/Logout";
+        options.AccessDeniedPath = "/Home/AccessDenied";
+    });
 //swagger serivicios:
 //builder.Services.AddControllers();
 builder.Services.AddControllersWithViews();
@@ -46,9 +54,15 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 
+//Pago Paypal
+builder.Services.AddScoped<PayPalService>();
+
+builder.Services.AddHttpClient<EmailValidation>(); // Agregar HttpClient para EmailValidation
+builder.Services.AddControllersWithViews();   // Agregar soporte para controladores y vistas
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configuración del pipeline de solicitudes HTTP
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
@@ -57,7 +71,6 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Main/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -73,6 +86,8 @@ app.UseStaticFiles();
 app.UseCors("AllowAll");
 
 app.UseRouting();
+
+// Activa autenticación y autorización
 app.UseAuthentication();
 app.UseAuthorization();
 

@@ -1,0 +1,39 @@
+@model IEnumerable<healthycannab.Models.Producto>
+
+<h2>Catálogo de Productos</h2>
+<br>
+<div class="container">
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img class="card-img-top" src="@product.ImagenUrl" alt="@product.Nombre" style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Nombre</h5>
+                        <p class="card-text">@product.Descripcion</p>
+                        <p class="card-text"><strong>Precio: $@product.Precio</strong></p>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                        <form asp-controller="CarritoCompras" asp-action="Agregar" method="post">
+                            <input type="hidden" name="productoId" value="@product.Id" />
+                            <button type="submit" class="btn btn-primary">Añadir al Carrito</button>
+                        </form>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="mt-4">
+    @if (User.Identity.IsAuthenticated)
+    {
+    <a asp-controller="CarritoCompras" asp-action="CarritoCompras" class="btn btn-success">Ver Carrito</a>
+    }
+    else
+    {
+    <span>¡Necesitas Iniciar Sesión para comprar! >:(</span>
+    }
+</div>

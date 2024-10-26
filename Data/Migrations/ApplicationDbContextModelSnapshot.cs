@@ -260,20 +260,65 @@ namespace healthycannab.Data.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Descripcion")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("ImagenUrl")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Nombre")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<decimal?>("Precio")
-                        .HasColumnType("numeric");
+                    b.Property<decimal>("Precio")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("DataProducto");
+                    b.ToTable("producto");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Descripcion = "Aceite de cannabis 100% puro",
+                            ImagenUrl = "/img/a.png",
+                            Nombre = "Producto 1",
+                            Precio = 150m
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Descripcion = "Ungüento de cannabis",
+                            ImagenUrl = "/img/b.jpg",
+                            Nombre = "Producto 2",
+                            Precio = 120m
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Descripcion = "Cannabis CBD cannabidiol",
+                            ImagenUrl = "/img/canabis3.png",
+                            Nombre = "Producto 3",
+                            Precio = 95m
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Descripcion = "Cannabis To you",
+                            ImagenUrl = "/img/canabis4.png",
+                            Nombre = "Producto 4",
+                            Precio = 105m
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Descripcion = "Cannabis Gotas",
+                            ImagenUrl = "/img/cannabisGotas.jpg",
+                            Nombre = "Producto 5",
+                            Precio = 99m
+                        });
                 });
 
             modelBuilder.Entity("healthycannab.Models.Usuario", b =>
@@ -313,6 +358,10 @@ namespace healthycannab.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Rol")
                         .IsRequired()
                         .HasColumnType("text");
 

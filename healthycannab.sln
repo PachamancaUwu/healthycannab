@@ -15,7 +15,6 @@ Global
 		{C762E578-0DD4-40B6-9BAC-DAA009267A85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C762E578-0DD4-40B6-9BAC-DAA009267A85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C762E578-0DD4-40B6-9BAC-DAA009267A85}.Release|Any CPU.Build.0 = Release|Any CPU
-
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

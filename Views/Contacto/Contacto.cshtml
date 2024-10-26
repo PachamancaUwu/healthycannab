@@ -1,0 +1,46 @@
+@model healthycannab.Models.Contacto
+
+@{
+    ViewData["Title"] = "Contacto";
+}
+
+<h2>Contáctanos</h2>
+<p style="text-align: center;">Déjanos un mensaje y te responderemos lo más pronto posible sobre nuestros productos de cannabis medicinal.</p>
+
+<form asp-action="Contacto" method="post">
+    <div class="form-group">
+        <label asp-for="Nombre" class="control-label">Nombre</label>
+        
+        <input asp-for="Nombre" class="form-control" placeholder="Ingresa tu nombre aquí" value="@Model.Nombre"/>
+        <span asp-validation-for="Nombre" class="text-danger"></span>
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="Correo" class="control-label">Correo Electrónico</label>
+        
+        <input asp-for="Correo" class="form-control" type="email" placeholder="Ingresa tu email aquí" value="@Model.Correo"/>
+        <span asp-validation-for="Correo" class="text-danger"></span>
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="Celular" class="control-label">Celular</label>
+        
+        <input asp-for="Celular" class="form-control" placeholder="Ingresa tu celular aquí" value="@Model.Celular"/>
+        <span asp-validation-for="Celular" class="text-danger"></span>
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="Mensaje" class="control-label">Mensaje</label>
+        
+        <textarea asp-for="Mensaje" class="form-control" placeholder="Ingresa tu mensaje aquí"></textarea>
+        <span asp-validation-for="Mensaje" class="text-danger"></span>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-success">Enviar</button>
+</form>
+<br>
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success">@ViewBag.Message</div>
+}
+
