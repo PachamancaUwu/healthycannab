@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using healthycannab.Models;
 using healthycannab.Data;
+using healthycannab.Services;
 
 namespace healthycannab.Controllers
 {
    public class InicioSesionController : Controller
 {
     private readonly ApplicationDbContext _context;
+    private readonly EmailValidation _emailValidation;
 
-    public InicioSesionController(ApplicationDbContext context)
+    public InicioSesionController(ApplicationDbContext context, EmailValidation emailValidation)
     {
         _context = context;
+        _emailValidation = emailValidation;
     }
 
     // Acción GET para mostrar la vista de registro
@@ -31,20 +35,29 @@ namespace healthycannab.Controllers
     {
         var existeUsuario = await _context.DataUsuario.FirstOrDefaultAsync(u => u.Correo == usuario.Correo);
 
-        if (existeUsuario == null)
-        {
-            usuario.Rol = "Usuario";
-
-            _context.Add(usuario);
-            await _context.SaveChangesAsync();
-
-            return RedirectToAction("Login");  
-        }
-        else
+        // Verifica si el correo ya está registrado
+        if (existeUsuario != null)
         {
             ViewBag.Error = "El correo ya está registrado.";
             return View(usuario);
         }
+
+        // Valida el correo electrónico con ZeroBounce
+        var validationResponse = await _emailValidation.ValidateEmailAsync(usuario.Correo);
+
+        // Verifica si el correo es inválido
+        if (validationResponse.Status != "valid")
+        {
+            ViewBag.Error = "El correo proporcionado no es válido.";
+            return View(usuario);
+        }
+
+        // Si el correo no existe y es válido, procede con el registro
+        usuario.Rol = "Usuario";
+        _context.Add(usuario);
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction("Login");
     }
 
     [HttpGet]
