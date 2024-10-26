@@ -1,5 +1,6 @@
 @{
     ViewData["Title"] = "Blog";
+    Layout = User.Identity.IsAuthenticated ? "~/Views/Shared/_layoutLogin.cshtml" : "~/Views/Shared/_layout.cshtml";
 }
 
 <!-- Importar Google Fonts -->
@@ -118,13 +119,11 @@
     <nav aria-label="Paginación de blog" class="pagination-blog">
         <ul class="pagination justify-content-center">
             <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Anterior</a>
             </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a  asp-area="" asp-controller="Blog" asp-action="Blog" class="page-link">1</a></li>
+            <li class="page-item"><a  asp-area="" asp-controller="Blog" asp-action="Blog2" class="page-link">2</a></li>
             <li class="page-item">
-                <a class="page-link" href="#">Siguiente</a>
+                <a asp-area="" asp-controller="Blog" asp-action="Blog2" class="page-link">Siguiente</a>
             </li>
         </ul>
     </nav>

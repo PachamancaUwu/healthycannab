@@ -7,13 +7,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using healthycannab.Models;
 using healthycannab.Data;
+using healthycannab.Controllers;
 
 
 namespace healthycannab.Controllers
 {
-    public class BlogController : Controller
+    public class BlogController : BaseController
     {
         public IActionResult Blog()
+        {
+            return View();
+        }
+
+         public IActionResult Blog2()
         {
             return View();
         }
