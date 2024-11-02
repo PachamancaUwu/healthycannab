@@ -60,6 +60,10 @@ builder.Services.AddScoped<PayPalService>();
 builder.Services.AddHttpClient<EmailValidation>(); // Agregar HttpClient para EmailValidation
 builder.Services.AddControllersWithViews();   // Agregar soporte para controladores y vistas
 
+//API SendGrid
+builder.Services.AddTransient<EmailSendService>();
+
+
 var app = builder.Build();
 
 // Configuración del pipeline de solicitudes HTTP
