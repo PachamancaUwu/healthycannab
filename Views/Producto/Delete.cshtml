@@ -1,0 +1,19 @@
+@model Producto
+
+
+<div class="container mt-4">
+    <h2>Eliminar Producto</h2>
+    <div class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">¿Estás seguro de que deseas eliminar este producto?</h4>
+        <p><strong>Nombre:</strong> @Model.Nombre</p>
+        <p><strong>Descripción:</strong> @Model.Descripcion</p>
+        <p><strong>Precio:</strong> $@Model.Precio</p>
+        <img src="@Model.ImagenUrl" alt="@Model.Nombre" class="img-fluid" />
+        <hr>
+        <form asp-action="DeletePost" method="post">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger">Eliminar</button>
+            <a href="@Url.Action("AdminProducto")" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
