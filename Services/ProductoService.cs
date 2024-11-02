@@ -28,5 +28,27 @@ namespace healthycannab.Services
                 return null;
             return await _context.DataProducto.ToListAsync();
         }
+
+        public async Task<List<Producto>> FilterProductos(string? nombre, decimal? precioMin, decimal? precioMax)
+        {
+            var query = _context.DataProducto.AsQueryable();
+
+            if(!string.IsNullOrEmpty(nombre))
+            {
+                query = query.Where(p => p.Nombre.Contains(nombre));
+
+            }
+            if (precioMin.HasValue)
+            {
+                query = query.Where(p => p.Precio >= precioMin);
+            }
+            if (precioMax.HasValue)
+            {
+                query =query.Where(p => p.Precio <=precioMax);
+            }
+
+            return await query.ToListAsync();
+
+        }
     }
 }
