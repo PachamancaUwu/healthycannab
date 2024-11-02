@@ -44,7 +44,8 @@ namespace healthycannab.Controllers
         //     return View(productos);
         // }
 
-        public async Task<IActionResult> Index()
+        //[HttpGet("Producto/Lista")]
+        public async Task<IActionResult> Producto()
         {
             var productos = await _productoService.GetAll();
             return View(productos);
@@ -150,6 +151,21 @@ namespace healthycannab.Controllers
         public IActionResult Chat()
         {
             return View();
+        }
+
+        //filtro
+        //[HttpGet("Producto/Filtrar")]
+        public async Task<IActionResult> ListarProductos(string? nombre, decimal? precioMin, decimal? precioMax)
+        {
+            // Llamada al servicio para obtener productos filtrados
+            var productos = await _productoService.FilterProductos(nombre, precioMin, precioMax);
+
+            // Pasar los parámetros al ViewData para que la vista recuerde los valores ingresados
+            ViewData["nombre"] = nombre;
+            ViewData["precioMin"] = precioMin;
+            ViewData["precioMax"] = precioMax;
+
+            return View("Producto", productos);
         }
 
     }
