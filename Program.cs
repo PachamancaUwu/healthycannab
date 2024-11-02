@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using healthycannab.Data;
 using healthycannab.Services;
-using healthycannab.Service;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using Microsoft.AspNetCore.Authentication;
