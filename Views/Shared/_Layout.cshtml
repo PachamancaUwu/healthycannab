@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -11,6 +12,7 @@
         <link rel="stylesheet" href="~/css/stylePagoPaypal.css">
     <link rel="stylesheet" href="~/healthycannab.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
 </head>
 <body >
 <header>
@@ -31,6 +33,12 @@
                 <li class="nav-item">
                     <a class="nav-link text-dark" asp-area="" asp-controller="Producto" asp-action="Producto">Catálogo</a>
                 </li>
+                @if(User.IsInRole("Administrador")){
+                     <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Producto" asp-action="AdminProducto">Administrar Catálogo</a>
+                    </li>
+                }
+
                 <li class="nav-item">
                     <a class="nav-link text-dark" asp-area="" asp-controller="Contacto" asp-action="Contacto">Contacto</a>
                 </li>
@@ -97,8 +105,24 @@
                         </p>
                     </div>
                     <hr class="mb-4">
+                    
                     <div class="row d-flex justify-content-center text-center">
                         <div>
+                            <div class="col-auto mt-3">
+                                <h5 class="text-uppercase mb-4 fw-bold">Síguenos</h5>
+                                <div class="social-icons">
+                                    <a href="https://www.facebook.com/profile.php?id=61568082782587" target="_blank" class="text-dark me-3">
+                                        <i class="bi bi-facebook" style="font-size: 1.5rem;"></i>
+                                    </a>
+                                    <a href="https://x.com/HCannab" target="_blank" class="text-dark me-3">
+                                        <i class="bi bi-twitter" style="font-size: 1.5rem;"></i>
+                                    </a>
+                                    <a href="https://www.instagram.com/healthycannab?igsh=cGszazI1dmNmZ2Ri" target="_blank" class="text-dark me-3">
+                                        <i class="bi bi-instagram" style="font-size: 1.5rem;"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <br>
                             <p>
                                 Copyright 2024 All Rights Reserved By:
                               <strong>HealthyCannab</strong>
@@ -106,7 +130,10 @@
                             </p>
                         </div>
                     </div>
+            <div class="row d-flex justify-content-center text-center">
+            
         </div>
+        
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

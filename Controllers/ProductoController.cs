@@ -8,22 +8,16 @@ using Microsoft.Extensions.Logging;
 using healthycannab.Models;
 using healthycannab.Data;
 using Microsoft.EntityFrameworkCore;
-using healthycannab.Service;
+using healthycannab.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace healthycannab.Controllers
 {
-    // [Route("api/[controller]")]
-    // [ApiController]
+
     public class ProductoController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly ProductoService _productoService;
-        //private readonly ILogger<ProductoController> _logger;
-
-        /*public ProductoController(ILogger<ProductoController> logger)
-        {
-            _logger = logger;
-        }*/
 
         public ProductoController(ApplicationDbContext context, ProductoService productoService)
         {
@@ -31,33 +25,11 @@ namespace healthycannab.Controllers
             _productoService= productoService;
         }
 
-        // public IActionResult Index()
-        // {
-        //     var productos = new List<Producto>
-        // {
-        //     new Producto { Id = 1, Nombre = "Producto 1", Descripcion = "Aceite de cannabis 100% puro", Precio = 150, ImagenUrl = "/img/a.png" },
-        //     new Producto { Id = 2, Nombre = "Producto 2", Descripcion = "Unguento de cannabis", Precio = 120, ImagenUrl = "/img/b.jpg" },
-        //     new Producto { Id = 3, Nombre = "Producto 3", Descripcion = "Cannabis CBD cannabidiol", Precio = 95, ImagenUrl = "/img/canabis3.png" },
-        //     new Producto { Id = 3, Nombre = "Producto 4", Descripcion = "Cannabis To you", Precio = 105, ImagenUrl = "/img/canabis4.png" },
-        //     new Producto { Id = 3, Nombre = "Producto 5", Descripcion = "Cannabis Gotas", Precio = 99, ImagenUrl = "/img/cannabisGotas.jpg" }
-        // };
-        //     return View(productos);
-        // }
-
-        //[HttpGet("Producto/Lista")]
         public async Task<IActionResult> Producto()
         {
             var productos = await _productoService.GetAll();
             return View(productos);
         }
-
-        // public async Task<IActionResult> Index()
-        // {
-        //     var productos = await _productoService.GetAll();
-        //     return productos != null ?
-        //                 View(productos) :
-        //                 Problem("Entity set 'ApplicationDbContext.DataProducto'  is null.");
-        // }    
 
         //FindAll
         [HttpGet("All")]
@@ -136,10 +108,6 @@ namespace healthycannab.Controllers
             return NoContent();
         }
 
-        private bool ProductoExists(int id)
-        {
-            return _context.DataProducto.Any(e => e.Id == id);
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -168,5 +136,133 @@ namespace healthycannab.Controllers
             return View("Producto", productos);
         }
 
+
+        [Authorize(Roles ="Administrador")]
+        public async Task<IActionResult> AdminProducto()
+        {
+            var productos = await _context.DataProducto.ToListAsync();
+            return View(productos);
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var producto = await _context.DataProducto
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (producto == null)
+            {
+                return NotFound();
+            }
+
+            return View(producto);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Nombre,Descripcion,Precio,ImagenUrl")] Producto producto)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(producto);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(AdminProducto));
+            }
+            return View(producto);
+        }
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var producto = await _context.DataProducto.FindAsync(id);
+            if (producto == null)
+            {
+                return NotFound();
+            }
+            return View(producto);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Descripcion,Precio,ImagenUrl")] Producto producto)
+        {
+            if (id != producto.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(producto);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ProductoExists(producto.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(AdminProducto));
+            }
+            return View(producto);
+        }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var producto = await _context.DataProducto
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (producto == null)
+            {
+                return NotFound();
+            }
+
+            return View(producto);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeletePost(int id)
+        {
+            var producto = await _context.DataProducto.FindAsync(id);
+            if (producto != null)
+            {
+                _context.DataProducto.Remove(producto);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(AdminProducto));
+        }
+
+
+        private bool ProductoExists(int id)
+        {
+            return _context.DataProducto.Any(e => e.Id == id);
+        }
+
     }
 }
+

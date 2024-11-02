@@ -6,7 +6,7 @@ using healthycannab.Data;
 using healthycannab.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace healthycannab.Service
+namespace healthycannab.Services
 {
     public class ProductoService
     {
