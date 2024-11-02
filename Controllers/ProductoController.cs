@@ -56,7 +56,7 @@ namespace healthycannab.Controllers
         //     return productos != null ?
         //                 View(productos) :
         //                 Problem("Entity set 'ApplicationDbContext.DataProducto'  is null.");
-        // }
+        // }    
 
         //FindAll
         [HttpGet("All")]
