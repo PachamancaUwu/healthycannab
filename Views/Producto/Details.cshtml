@@ -1,0 +1,19 @@
+@model Producto
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Detalles del Producto</h2>
+    <div class="card mt-3 shadow" style="border-radius: 15px; border: 1px solid #dee2e6;">
+        <div class="card-header" style="background-color: #343a40; color: white; text-align: center; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+            <h5>@Model.Nombre</h5>
+        </div>
+        <div class="card-body text-center">
+            <p class="card-text"><strong>Descripción:</strong> @Model.Descripcion</p>
+            <p class="card-text"><strong>Precio:</strong> $@Model.Precio</p>
+            <img src="@Model.ImagenUrl" alt="@Model.Nombre" class="img-fluid rounded mx-auto d-block" style="max-height: 250px; object-fit: cover; border: 2px solid #343a40;" />
+        </div>
+        <div class="card-footer text-center" style="background-color: #f8f9fa; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;">
+            <a href="@Url.Action("Producto")" class="btn btn-outline-dark">Regresar</a>
+        </div>
+    </div>
+</div>
+
