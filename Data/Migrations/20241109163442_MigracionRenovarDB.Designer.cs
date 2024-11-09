@@ -12,8 +12,8 @@ using healthycannab.Data;
 namespace healthycannab.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241026043217_Swagger2Db")]
-    partial class Swagger2Db
+    [Migration("20241109163442_MigracionRenovarDB")]
+    partial class MigracionRenovarDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -271,12 +271,12 @@ namespace healthycannab.Data.Migrations
                     b.Property<string>("Nombre")
                         .HasColumnType("text");
 
-                    b.Property<decimal?>("Precio")
-                        .HasColumnType("numeric");
+                    b.Property<decimal>("Precio")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("DataProducto");
+                    b.ToTable("producto");
                 });
 
             modelBuilder.Entity("healthycannab.Models.Usuario", b =>
@@ -316,6 +316,10 @@ namespace healthycannab.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Rol")
                         .IsRequired()
                         .HasColumnType("text");
 
