@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace healthycannab.Models
 {
-    [Table("producto")]  // Especifica el nombre de la tabla en la base de datos
+    [Table("producto")]
     public class Producto
     {
         [Key]  
@@ -25,5 +25,9 @@ namespace healthycannab.Models
 
         
         public string? ImagenUrl { get; set; }
+
+        // Relaciones
+        public ICollection<Comentario> Comentarios { get; set; }
+        public ICollection<DetallePrecio> DetallesPrecios { get; set; }
     }
 }

@@ -10,6 +10,8 @@ namespace healthycannab.Models
     [Table("pedido")]
     public class Pedido
     {
+        [Key]  
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public DateTime Fecha { get; set; }
         public decimal Total { get; set; }
