@@ -12,8 +12,8 @@ using healthycannab.Data;
 namespace healthycannab.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241003165943_MigracionPostgreSQL")]
-    partial class MigracionPostgreSQL
+    [Migration("20241109163442_MigracionRenovarDB")]
+    partial class MigracionRenovarDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -254,6 +254,31 @@ namespace healthycannab.Data.Migrations
                     b.ToTable("contacto");
                 });
 
+            modelBuilder.Entity("healthycannab.Models.Producto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Descripcion")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImagenUrl")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("Precio")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("producto");
+                });
+
             modelBuilder.Entity("healthycannab.Models.Usuario", b =>
                 {
                     b.Property<int>("Id")
@@ -291,6 +316,10 @@ namespace healthycannab.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Rol")
                         .IsRequired()
                         .HasColumnType("text");
 

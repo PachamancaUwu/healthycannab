@@ -1,0 +1,22 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<ul class="navbar-nav">
+@if (User.Identity.IsAuthenticated)
+{
+    <li class="d-flex align-items-center">
+        <span class="me-3">Hola, @User.Identity.Name!</span>
+        <a class="nav-link text-dark" asp-area="" asp-controller="InicioSesion" asp-action="Logout">Cerrar sesión</a>
+    </li>
+}
+else
+{
+    <li class="d-flex align-items-center">
+        <a class="btn btn-outline-dark me-2" style="border-color: #4a4e69; color: #4a4e69;" asp-area="" asp-controller="InicioSesion" asp-action="Login">Iniciar Sesión</a>
+    </li>
+    <li class="d-flex align-items-center">
+        <a class="btn btn-outline-dark" style="border-color: #4a4e69; color: #4a4e69;" asp-area="" asp-controller="InicioSesion" asp-action="Registro">Registrarse</a>
+    </li>
+}
+</ul>

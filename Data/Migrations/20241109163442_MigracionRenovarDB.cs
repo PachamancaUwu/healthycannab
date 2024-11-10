@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace healthycannab.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class MigracionPostgreSQL : Migration
+    public partial class MigracionRenovarDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -68,6 +68,22 @@ namespace healthycannab.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "producto",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Nombre = table.Column<string>(type: "text", nullable: true),
+                    Descripcion = table.Column<string>(type: "text", nullable: true),
+                    Precio = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
+                    ImagenUrl = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_producto", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "usuario",
                 columns: table => new
                 {
@@ -80,7 +96,8 @@ namespace healthycannab.Data.Migrations
                     ApellidoMaterno = table.Column<string>(type: "text", nullable: false),
                     Celular = table.Column<string>(type: "text", nullable: false),
                     Dirección = table.Column<string>(type: "text", nullable: false),
-                    Dni = table.Column<string>(type: "text", nullable: false)
+                    Dni = table.Column<string>(type: "text", nullable: false),
+                    Rol = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -251,6 +268,9 @@ namespace healthycannab.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "contacto");
+
+            migrationBuilder.DropTable(
+                name: "producto");
 
             migrationBuilder.DropTable(
                 name: "usuario");

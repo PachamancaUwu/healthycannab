@@ -251,6 +251,31 @@ namespace healthycannab.Data.Migrations
                     b.ToTable("contacto");
                 });
 
+            modelBuilder.Entity("healthycannab.Models.Producto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Descripcion")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImagenUrl")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("Precio")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("producto");
+                });
+
             modelBuilder.Entity("healthycannab.Models.Usuario", b =>
                 {
                     b.Property<int>("Id")

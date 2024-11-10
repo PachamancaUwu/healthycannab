@@ -1,0 +1,13 @@
+@{
+    ViewData["Title"] = "Payment Success";
+}
+
+<h1>¡Pago Exitoso!</h1>
+<p>¡Tu pago se ha realizado exitosamente!</p>
+
+<!-- Ejemplo de uso de datos de la solicitud -->
+<p>Payment ID: @Context.Request.Query["paymentId"]</p>
+<p>Token: @Context.Request.Query["token"]</p>
+<p>Payer ID: @Context.Request.Query["PayerID"]</p>
+
+<!-- Aquí puedes agregar más detalles que desees mostrar -->

@@ -1,51 +1,61 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - HealthyCannab</title>
-
+    
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/styleContacto.css">
+        <link rel="stylesheet" href="~/css/stylePagoPaypal.css">
     <link rel="stylesheet" href="~/healthycannab.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
 </head>
 <body >
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container-fluid">
-            <a class="navbar-brand" asp-area="" asp-controller="Main" asp-action="Inicio">
-                <img src="~/img/logo.png" alt="HealthyCannab Logo" height="50px">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Main" asp-action="Inicio">Inicio</a>
+    <div class="container-fluid">
+        <a class="navbar-brand" asp-area="" asp-controller="Main" asp-action="Inicio">
+            <img src="~/img/logo.png" alt="HealthyCannab Logo" height="50px">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Main" asp-action="Inicio">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Producto" asp-action="Producto">Catálogo</a>
+                </li>
+                @if(User.IsInRole("Administrador")){
+                     <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Producto" asp-action="AdminProducto">Administrar Catálogo</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Producto" asp-action="Index">Catálogo</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Contacto" asp-action="Contacto">Contacto</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Blog" asp-action="Blog">Blog</a> <!-- Ajustado para Blog -->
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Nosotros" asp-action="Nosotros">Nosotros</a>
-                    </li>
-                </ul>
-            </div>
+                }
+
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Contacto" asp-action="Contacto">Contacto</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Blog" asp-action="Blog">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Nosotros" asp-action="Nosotros">Nosotros</a>
+                </li>
+            </ul>
+            <partial name="_LoginPartial" />
         </div>
-    </nav>
+    </div>
+</nav>
 </header>
 
-    <div class="container">
+    <div>
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -95,8 +105,24 @@
                         </p>
                     </div>
                     <hr class="mb-4">
+                    
                     <div class="row d-flex justify-content-center text-center">
                         <div>
+                            <div class="col-auto mt-3">
+                                <h5 class="text-uppercase mb-4 fw-bold">Síguenos</h5>
+                                <div class="social-icons">
+                                    <a href="https://www.facebook.com/profile.php?id=61568082782587" target="_blank" class="text-dark me-3">
+                                        <i class="bi bi-facebook" style="font-size: 1.5rem;"></i>
+                                    </a>
+                                    <a href="https://x.com/HCannab" target="_blank" class="text-dark me-3">
+                                        <i class="bi bi-twitter" style="font-size: 1.5rem;"></i>
+                                    </a>
+                                    <a href="https://www.instagram.com/healthycannab?igsh=cGszazI1dmNmZ2Ri" target="_blank" class="text-dark me-3">
+                                        <i class="bi bi-instagram" style="font-size: 1.5rem;"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <br>
                             <p>
                                 Copyright 2024 All Rights Reserved By:
                               <strong>HealthyCannab</strong>
@@ -104,30 +130,15 @@
                             </p>
                         </div>
                     </div>
-                    <div class="row d-flex justify-content-center">
-                        <div class="text-center">
-                          <ul class="list-unstyled list-inline">
-                              <li class="list-inline-item">
-                                  <a href="#" class="text-dark"><i id="red1" class=""></i></a>
-                              </li>
-                              <li class="list-inline-item">
-                                  <a href="#" class="text-dark"><i id="red3" class=""></i></a>
-                              </li>
-                              <li class="list-inline-item">
-                                  <a href="#" class="text-dark"><i id="red2" class=""></i></a>
-                              </li>
-                              <li class="list-inline-item">
-                                  <a href="#" class="text-dark"><i id="red4" class=""></i></a>
-                              </li>
-                          </ul>
-                        </div>
-                    </div>
-                </div>
+            <div class="row d-flex justify-content-center text-center">
+            
         </div>
+        
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
