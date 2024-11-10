@@ -1,7 +1,33 @@
 @model IEnumerable<healthycannab.Models.Producto>
 
 <h2>Catálogo de Productos</h2>
+
+<!-- Formulario de Filtro -->
+<form method="get" asp-action="ListarProductos">
+    <div class="row">
+        <div class="col-md-4">
+            <label for="nombre">Nombre del Producto:</label>
+            <input type="text" id="nombre" name="nombre" class="form-control" value="@ViewData["nombre"]" placeholder="Buscar por nombre">
+        </div>
+        <div class="col-md-4">
+            <label for="precioMin">Precio Mínimo:</label>
+            <input type="number" id="precioMin" name="precioMin" class="form-control" value="@ViewData["precioMin"]" placeholder="Ej. 50">
+        </div>
+        <div class="col-md-4">
+            <label for="precioMax">Precio Máximo:</label>
+            <input type="number" id="precioMax" name="precioMax" class="form-control" value="@ViewData["precioMax"]" placeholder="Ej. 200">
+        </div>
+    </div>
+    <div class="mt-3">
+        <button type="submit" class="btn btn-primary">Aplicar Filtro</button>
+    </div>
+</form>
+
+
+
 <br>
+@if (Model.Any())
+{
 <div class="container">
     <div class="row">
         @foreach (var product in Model)
@@ -13,17 +39,32 @@
                         <h5 class="card-title">@product.Nombre</h5>
                         <p class="card-text">@product.Descripcion</p>
                         <p class="card-text"><strong>Precio: $@product.Precio</strong></p>
+                        @if (User.Identity.IsAuthenticated)
+                        {
                         <form asp-controller="CarritoCompras" asp-action="Agregar" method="post">
                             <input type="hidden" name="productoId" value="@product.Id" />
                             <button type="submit" class="btn btn-primary">Añadir al Carrito</button>
                         </form>
+                        }
                     </div>
                 </div>
             </div>
         }
     </div>
 </div>
+}
+else
+{
+    <p>No se encontraron productos con los criterios especificados.</p>
+}
 
-<div class="mt-4">
+<div class="mt-4 text-center">
+    @if (User.Identity.IsAuthenticated)
+    {
     <a asp-controller="CarritoCompras" asp-action="CarritoCompras" class="btn btn-success">Ver Carrito</a>
+    }
+    else
+    {
+    <span>¡Necesitas Iniciar Sesión para comprar! >:(</span>
+    }
 </div>

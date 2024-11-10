@@ -47,7 +47,7 @@ namespace healthycannab.Controllers
                 item.Cantidad++;
             }
 
-            return RedirectToAction("Index", "Producto");
+            return RedirectToAction("Producto", "Producto");
         }
 
     [HttpPost]

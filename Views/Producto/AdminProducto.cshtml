@@ -1,0 +1,33 @@
+@model IEnumerable<healthycannab.Models.Producto>
+
+<div class="container mt-4">
+    <h2 class="mb-4">Catálogo de Productos</h2>
+    <a href="@Url.Action("Create")" class="btn btn-primary mb-3">Agregar Nuevo Producto</a>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Imagen</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var producto in Model)
+            {
+                <tr>
+                    <td>@producto.Nombre</td>
+                    <td>@producto.Descripcion</td>
+                    <td>@producto.Precio</td>
+                    <td><img src="@producto.ImagenUrl" alt="@producto.Nombre" width="50" height="50" /></td>
+                    <td>
+                        <a href="@Url.Action("Details", new { id = producto.Id })" class="btn btn-info btn-sm">Detalles</a>
+                        <a href="@Url.Action("Edit", new { id = producto.Id })" class="btn btn-warning btn-sm">Editar</a>
+                        <a href="@Url.Action("Delete", new { id = producto.Id })" class="btn btn-danger btn-sm">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

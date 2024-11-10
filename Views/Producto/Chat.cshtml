@@ -1,0 +1,68 @@
+@{
+    ViewData["Title"] = "Chat";
+}
+
+<h2>Chat con Salas</h2>
+
+<label>Usuario:</label>
+<input type="text" id="userInput" placeholder="Escribe tu nombre" />
+<br />
+<label>Sala:</label>
+<input type="text" id="roomInput" placeholder="Escribe el nombre de la sala" />
+<br />
+<button onclick="joinRoom()">Unirse a la sala</button>
+<button onclick="leaveRoom()">Salir de la sala</button>
+
+<hr />
+
+<div id="chat">
+    <label>Mensaje:</label>
+    <input type="text" id="messageInput" placeholder="Escribe un mensaje" />
+    <button onclick="sendMessage()">Enviar mensaje</button>
+</div>
+
+<ul id="messagesList"></ul>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.9/signalr.min.js"></script>
+    <script type="text/javascript">
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/chatHub")
+            .build();
+
+        let room = '';
+
+        connection.on("ReceiveMessage", function (user, message) {
+            const li = document.createElement("li");
+            document.getElementById("messagesList").appendChild(li);
+            li.textContent = `${user}: ${message}`;
+        });
+
+        connection.start().catch(function (err) {
+            return console.error(err.toString());
+        });
+
+        function sendMessage() {
+            const user = document.getElementById("userInput").value;
+            const message = document.getElementById("messageInput").value;
+            connection.invoke("SendMessage", user, message, room).catch(function (err) {
+                return console.error(err.toString());
+            });
+        }
+
+        function joinRoom() {
+            room = document.getElementById("roomInput").value;
+            connection.invoke("JoinRoom", room).catch(function (err) {
+                return console.error(err.toString());
+            });
+        }
+
+        function leaveRoom() {
+            const roomToLeave = document.getElementById("roomInput").value;
+            connection.invoke("LeaveRoom", roomToLeave).catch(function (err) {
+                return console.error(err.toString());
+            });
+            room = '';
+        }
+    </script>
+}

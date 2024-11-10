@@ -12,8 +12,8 @@ using healthycannab.Data;
 namespace healthycannab.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241026010726_tablaProducto")]
-    partial class tablaProducto
+    [Migration("20241109163442_MigracionRenovarDB")]
+    partial class MigracionRenovarDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -263,15 +263,12 @@ namespace healthycannab.Data.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Descripcion")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("ImagenUrl")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Nombre")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<decimal>("Precio")
@@ -319,6 +316,10 @@ namespace healthycannab.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Rol")
                         .IsRequired()
                         .HasColumnType("text");
 
