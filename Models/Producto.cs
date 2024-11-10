@@ -23,7 +23,6 @@ namespace healthycannab.Models
         [Column(TypeName = "decimal(18,2)")]  
         public decimal Precio { get; set; }
 
-        
         public string? ImagenUrl { get; set; }
 
         // Relaciones
