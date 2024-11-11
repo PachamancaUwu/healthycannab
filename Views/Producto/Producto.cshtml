@@ -34,9 +34,14 @@
         {
             <div class="col-md-4 mb-4">
                 <div class="card h-100">
-                    <img class="card-img-top" src="@product.ImagenUrl" alt="@product.Nombre" style="height: 200px; object-fit: cover;">
+                    <a asp-controller="Producto" asp-action="DetalleCompleto" asp-route-id="@product.Id">
+                        <img class="card-img-top" src="@product.ImagenUrl" alt="@product.Nombre" style="height: 200px; object-fit: contain;">
+                    </a>
+                    
                     <div class="card-body">
-                        <h5 class="card-title">@product.Nombre</h5>
+                        <h5 class="card-title">
+                        <a asp-controller="Producto" asp-action="DetalleCompleto" asp-route-id="@product.Id">@product.Nombre</a>
+                        </h5>
                         <p class="card-text">@product.Descripcion</p>
                         <p class="card-text"><strong>Precio: $@product.Precio</strong></p>
                         @if (User.Identity.IsAuthenticated)

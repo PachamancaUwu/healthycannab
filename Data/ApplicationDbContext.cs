@@ -13,5 +13,6 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<healthycannab.Models.Usuario> DataUsuario { get; set;}
     public DbSet<healthycannab.Models.Contacto> DataContacto { get; set;}
     public DbSet<healthycannab.Models.Producto> DataProducto { get; set;}
+    public DbSet<healthycannab.Models.Comentario>  DataComentario { get; set;}
 
 }
