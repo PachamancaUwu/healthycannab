@@ -91,7 +91,8 @@ namespace healthycannab.Controllers
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, usuario.Correo),
-                new Claim(ClaimTypes.Role, usuario.Rol)
+                new Claim(ClaimTypes.Role, usuario.Rol),
+                new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString())  // Especificar el ID del usuario (Importante para los inserts en las tablas relaciondas)
             };
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
