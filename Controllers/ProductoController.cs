@@ -121,6 +121,27 @@ namespace healthycannab.Controllers
             return View();
         }
 
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> AgregarComentario(int productoId, string contenido)
+        {
+            var comentario = new Comentario
+            {
+                ProductoId = productoId,
+                Contenido = contenido,
+                Usuario = User.Identity.Name,
+                Fecha = DateTime.UtcNow //formato UTC aceptado por postgres
+            };
+
+            _context.DataComentario.Add(comentario);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("DetalleCompleto", new { id = productoId });
+        }
+
+
+
         //filtro
         //[HttpGet("Producto/Filtrar")]
         public async Task<IActionResult> ListarProductos(string? nombre, decimal? precioMin, decimal? precioMax)
@@ -135,6 +156,32 @@ namespace healthycannab.Controllers
 
             return View("Producto", productos);
         }
+
+        //Detalle completo del producto
+        public async Task<IActionResult> DetalleCompleto(int id)
+        {
+             var producto = await _productoService.GetProductoById(id);
+            if (producto == null)
+            {
+                return NotFound();
+            }
+
+            var comentarios = await _context.DataComentario
+                .Where(c => c.ProductoId == id)
+                .ToListAsync();
+
+            var viewModel = new ProductoDetalleViewModel
+            {
+                Producto = producto,
+                Comentarios = comentarios,
+                NuevoComentario = new Comentario()  // Inicializa un nuevo comentario vacío
+            };
+
+            return View(viewModel);
+        }
+
+
+
 
 
         [Authorize(Roles ="Administrador")]
