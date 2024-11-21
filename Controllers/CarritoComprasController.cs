@@ -12,18 +12,21 @@ using PayPal.Api;
 using Microsoft.Extensions.Configuration;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore;
 namespace healthycannab.Controllers
 {
     public class CarritoComprasController : Controller
     {
         private readonly PayPalService _payPalService;
         private readonly ApplicationDbContext _context;
+        private readonly EmailSendService _emailSendService;
         private static CarritoCompras _carrito = new CarritoCompras();
 
-        public CarritoComprasController(ApplicationDbContext context, IConfiguration configuration)
+        public CarritoComprasController(ApplicationDbContext context, IConfiguration configuration, EmailSendService emailSendService)
         {
             _context = context;
             _payPalService = new PayPalService(configuration); // Inicializar PayPalService aquí
+            _emailSendService = emailSendService;
         }
 
         [HttpPost]
@@ -120,6 +123,7 @@ namespace healthycannab.Controllers
             {
                 return Unauthorized();
             }
+            var usuario = await _context.DataUsuario.FindAsync(int.Parse(usuarioId));  
 
             // Creamos el Pedido
             var pedido = new Pedido
@@ -134,16 +138,53 @@ namespace healthycannab.Controllers
             await _context.SaveChangesAsync(); 
 
             // Insertar en la tabla DetallePrecio
+            var cantidadTotal = 0;
+            List<string> detallesCarrito = new List<string>();
+
             foreach (var item in _carrito.Items)
             {
+                detallesCarrito.Add($"Producto: {item.Producto.Nombre}, Precio: {item.Producto.Precio}, Cantidad: {item.Cantidad}");
+
                 var detalle = new DetallePrecio
                 {
                     PedidoId = pedido.Id, 
                     ProductoId = item.ProductoId,
                     Cantidad = item.Cantidad
                 };
-
+                
                 _context.DataDetallePrecio.Add(detalle);
+
+                cantidadTotal+=item.Cantidad; // Suma la cantidad total de productos comprados
+            }
+            
+            string detalles = string.Join("\n", detallesCarrito);
+            string mensaje = $"Hola {usuario.Nombre} {usuario.ApellidoPaterno} {usuario.ApellidoMaterno} (DNI: {usuario.Dni}),\n\nGracias por tu compra en HealthyCannab. Tu pedido ha sido procesado exitosamente y será llevado a la dirección: {usuario.Dirección}.\n\nProductos adquiridos:\n{detalles}\n\nTotal: {pedido.Total}\nFecha de compra: {pedido.Fecha}\n\n¡Gracias por elegirnos!";
+            await _emailSendService.SendEmailAsync("Compra en HealthyCannab", mensaje, usuario.Correo);
+
+            //Si la cantidad de productos es mayor o igual a 4 se generará un código de descuento
+            if (cantidadTotal >= 4)
+            {
+                bool existe;
+                string partialCodigo;
+
+                // Verifica si el código generado ya existe
+                do
+                {
+                    partialCodigo = CodigoPromocion.GenerarCodigo();
+                    existe = await _context.DataCodigoPromocion.AnyAsync(p => p.Codigo == partialCodigo);
+                }while (existe);
+
+                var codigoPromocion = new CodigoPromocion
+                {
+                    Codigo = partialCodigo,
+                    Descuento = 0.15m,
+                    FechaExpiracion = DateTime.UtcNow.AddMonths(1)
+                };
+
+                _context.DataCodigoPromocion.Add(codigoPromocion);
+                
+                string mensajeCodigo = $"Usted ha realizado una compra de {cantidadTotal} productos en total.\n¡Por lo que se lleva un código de descuento de un 15% de UN SOLO USO para su próxima compra en las tiendas de HealthyCannab!\n\nCódigo:{codigoPromocion.Codigo}\nFecha de caducidad: {codigoPromocion.FechaExpiracion:dd/MM/yyyy}";
+                await _emailSendService.SendEmailAsync("Código de descuento por su compra en HealthyCannab", mensajeCodigo, usuario.Correo);
             }
 
             await _context.SaveChangesAsync();
