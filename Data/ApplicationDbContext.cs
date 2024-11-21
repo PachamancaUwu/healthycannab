@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using healthycannab.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<healthycannab.Models.Comentario> DataComentario { get; set;}
     public DbSet<healthycannab.Models.Pedido> DataPedido { get; set;}
     public DbSet<healthycannab.Models.DetallePrecio> DataDetallePrecio { get; set;}
+    public DbSet<healthycannab.Models.CodigoPromocion> DataCodigoPromocion { get; set;}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -43,6 +45,13 @@ public class ApplicationDbContext : IdentityDbContext
             .HasOne(p => p.Usuario)
             .WithMany(u => u.Pedidos)
             .HasForeignKey(p => p.UsuarioId);
+                
+        //Relación One to One de CodigoPromocion y Pedido
+        modelBuilder.Entity<healthycannab.Models.Pedido>()
+            .HasOne(p => p.CodigoPromocion)
+            .WithOne(cp => cp.Pedido)
+            .HasForeignKey<Pedido>(p => p.CodigoPromocionId)
+            .OnDelete(DeleteBehavior.SetNull); // Si se elimina un código de promoción, no elimina los pedidos
 
         // Relaciones de Pedido y DetallePrecio
         modelBuilder.Entity<healthycannab.Models.DetallePrecio>()
@@ -55,6 +64,11 @@ public class ApplicationDbContext : IdentityDbContext
             .HasOne(dp => dp.Producto)
             .WithMany(pr => pr.DetallesPrecios)
             .HasForeignKey(dp => dp.ProductoId);
+
+        // Restricción de unicidad en CodigoPromocion
+        modelBuilder.Entity<healthycannab.Models.CodigoPromocion>()
+            .HasIndex(cp => cp.Codigo)
+            .IsUnique();
     }
 
 }

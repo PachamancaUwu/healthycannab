@@ -16,9 +16,12 @@ namespace healthycannab.Models
         public DateTime Fecha { get; set; }
         public decimal Total { get; set; }
 
-        // Clave Foránea
+        // Claves Foráneas
         public int UsuarioId { get; set; }
         public Usuario Usuario { get; set; }
+
+        public int? CodigoPromocionId { get; set; }
+        public CodigoPromocion? CodigoPromocion { get; set; }
 
         // Relaciones
         public ICollection<DetallePrecio> DetallesPrecios { get; set; }
