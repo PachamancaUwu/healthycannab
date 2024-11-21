@@ -59,12 +59,8 @@ else
 }
 
 <div class="mt-4 text-center">
-    @if (User.Identity.IsAuthenticated)
+    @if (!User.Identity.IsAuthenticated)
     {
-    <a asp-controller="CarritoCompras" asp-action="CarritoCompras" class="btn btn-success">Ver Carrito</a>
-    }
-    else
-    {
-    <span>¡Necesitas Iniciar Sesión para comprar! >:(</span>
+        <span>¡Necesitas Iniciar Sesión para comprar! >:(</span>
     }
 </div>
