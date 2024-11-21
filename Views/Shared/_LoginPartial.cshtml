@@ -5,11 +5,15 @@
 <ul class="navbar-nav">
 @if (User.Identity.IsAuthenticated)
 {
+        
+    @if(User.IsInRole("Usuario")){
+        
         <li class="nav-item">
-                    <a asp-controller="CarritoCompras" asp-action="CarritoCompras" class="nav-link text-success"> Carrito de Compras
-                        <i class="bi bi-cart"></i>
-                    </a>
+            <a asp-controller="CarritoCompras" asp-action="CarritoCompras" class="nav-link text-success"> Carrito de Compras
+            <i class="bi bi-cart"></i>
+            </a>
         </li>
+    }
     <li class="d-flex align-items-center">
         <span class="me-3">Hola, @User.Identity.Name!</span>
         <a class="nav-link text-dark" asp-area="" asp-controller="InicioSesion" asp-action="Logout">Cerrar sesión</a>
