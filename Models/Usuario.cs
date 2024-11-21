@@ -23,6 +23,10 @@ namespace healthycannab.Models
         public string Dni { get; set; }    
         public string Rol { get; set; }
 
+        //Relaciones
+        public ICollection<Comentario> Comentarios { get; set; }
+        public ICollection<Pedido> Pedidos { get; set; }
+
     }
 
  }

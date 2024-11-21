@@ -1,0 +1,161 @@
+@model healthycannab.Models.ProductoDetalleViewModel
+
+@{
+    ViewData["Title"] = Model.Producto.Nombre;
+}
+
+<style>
+    thead {
+        background-color: #343a40;
+        color: #ffffff;
+    }
+
+    .img-fluid {
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+
+    .btn {
+        font-weight: bold;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .btn:hover {
+        transform: scale(1.05);
+    }
+
+    .table {
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .table td, .table th {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .card {
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+    }
+</style>
+
+<!-- Navbar fijo que aparece al hacer scroll -->
+<div id="fixed-navbar" class="navbar navbar-light bg-light fixed-top shadow-sm d-none" style="top: 60px;">
+    <div class="container">
+        <a class="navbar-brand" href="#top">Principal (↑)</a>
+        <a class="nav-link" href="#descripcion">Descripción del producto</a>
+        <a class="nav-link" href="#comentarios">Comentarios</a>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <!-- Información del Producto -->
+    <div id="top" class="row">
+        <div class="col-md-5 text-center">
+            <img src="@Model.Producto.ImagenUrl" alt="@Model.Producto.Nombre" class="img-fluid" style="max-height: 400px; object-fit: cover;" />
+        </div>
+        <div class="col-md-7">
+            <h2 class="text-center">@Model.Producto.Nombre</h2>
+            <p class="text-center"><strong>Descripción:</strong> @Model.Producto.Descripcion</p>
+            <p class="text-center"><strong>Precio:</strong> $@Model.Producto.Precio</p>
+            <div class="text-center">
+                <form asp-controller="CarritoCompras" asp-action="Agregar" method="post">
+                    <input type="hidden" name="productoId" value="@Model.Producto.Id" />
+                    <button type="submit" class="btn btn-primary btn-lg">Añadir al Carrito</button>
+                </form>
+            </div>
+            <div class="mt-3 text-center">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a asp-controller="CarritoCompras" asp-action="CarritoCompras" class="btn btn-success">Ver Carrito</a>
+                }
+                else
+                {
+                    <p class="text-warning">¡Necesitas Iniciar Sesión para comprar! >:(</p>
+                }
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+    <!-- Tabla de Detalles del Producto -->
+    <div id="descripcion" class="my-5">
+        <h4 class="text-center">Detalles del Producto</h4>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Nombre</th>
+                    <td>@Model.Producto.Nombre</td>
+                </tr>
+                <tr>
+                    <th>Descripción</th>
+                    <td>@Model.Producto.Descripcion</td>
+                </tr>
+                <tr>
+                    <th>Precio</th>
+                    <td>$@Model.Producto.Precio</td>
+                </tr>
+                <tr>
+                    <th>ID del Producto</th>
+                    <td>@Model.Producto.Id</td>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    <hr />
+
+    <!-- Sección de Comentarios -->
+    <div id="comentarios" class="my-5">
+        <h4 class="text-center">Comentarios</h4>
+
+        <!-- Formulario para agregar comentario -->
+        @if (User.Identity.IsAuthenticated)
+        {
+            <form method="post" asp-action="AgregarComentario" asp-route-productoId="@Model.Producto.Id">
+                <div class="form-group">
+                    <label for="comentario">Escribe tu comentario:</label>
+                    <textarea id="comentario" name="contenido" class="form-control" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary mt-2">Enviar comentario</button>
+            </form>
+        }
+        else
+        {
+            <p class="text-info">Inicia sesión para dejar un comentario.</p>
+        }
+
+        <!-- Listado de comentarios -->
+        <div class="mt-4">
+            @if (Model.Comentarios.Any())
+            {
+                @foreach (var comentario in Model.Comentarios)
+                {
+                    <div class="card p-3 mb-3">
+                        <p><strong>@comentario.Usuario</strong> - @comentario.Fecha.ToString("g")</p>
+                        <p>@comentario.Contenido</p>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>No hay comentarios aún. Sé el primero en comentar.</p>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- Script para mostrar el navbar fijo al hacer scroll -->
+<script>
+    document.addEventListener("scroll", function () {
+        const fixedNavbar = document.getElementById("fixed-navbar");
+        if (window.scrollY > 300) {
+            fixedNavbar.classList.remove("d-none");
+        } else {
+            fixedNavbar.classList.add("d-none");
+        }
+    });
+</script>
