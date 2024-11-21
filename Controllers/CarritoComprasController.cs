@@ -10,8 +10,8 @@ using healthycannab.Data;
 using healthycannab.Services;
 using PayPal.Api;
 using Microsoft.Extensions.Configuration;
-
-// CarritoComprasController.cs
+using System.Security.Claims;
+using Microsoft.EntityFrameworkCore.Storage;
 namespace healthycannab.Controllers
 {
     public class CarritoComprasController : Controller
@@ -101,12 +101,12 @@ namespace healthycannab.Controllers
         }
 
         [HttpGet]
-        public IActionResult Success(string paymentId, string token, string PayerID)
+        public async Task<IActionResult> Success(string paymentId, string token, string PayerID)
         {
+
             var paymentExecution = new PaymentExecution { payer_id = PayerID };
             var payment = Payment.Get(_payPalService.ApiContext, paymentId);
 
-            // Ejecutar el pago
             var executedPayment = payment.Execute(_payPalService.ApiContext, paymentExecution);
 
             if (executedPayment.state.ToLower() != "approved")
@@ -114,11 +114,43 @@ namespace healthycannab.Controllers
                 return View("Error");
             }
 
-             _carrito.Items.Clear(); 
+            // Obtener el usuario actual
+            var usuarioId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(usuarioId))
+            {
+                return Unauthorized();
+            }
 
-            // Aquí puedes guardar la información de la transacción en tu base de datos
-            
-            return View("Success", executedPayment); // Puedes pasar el objeto `executedPayment` si lo deseas
+            // Creamos el Pedido
+            var pedido = new Pedido
+            {
+                Fecha = DateTime.UtcNow,
+                Total = _carrito.Items.Sum(i => i.Producto.Precio * i.Cantidad), 
+                UsuarioId = int.Parse(usuarioId) 
+            };
+
+        
+            _context.DataPedido.Add(pedido);
+            await _context.SaveChangesAsync(); 
+
+            // Insertar en la tabla DetallePrecio
+            foreach (var item in _carrito.Items)
+            {
+                var detalle = new DetallePrecio
+                {
+                    PedidoId = pedido.Id, 
+                    ProductoId = item.ProductoId,
+                    Cantidad = item.Cantidad
+                };
+
+                _context.DataDetallePrecio.Add(detalle);
+            }
+
+            await _context.SaveChangesAsync();
+
+            _carrito.Items.Clear();
+
+            return View("Success", executedPayment);
         }
 
 
