@@ -31,7 +31,7 @@ public class ApplicationDbContext : IdentityDbContext
         // Configurar relación entre Comentario y Usuario
         modelBuilder.Entity<Comentario>()
             .HasOne(c => c.Usuario)
-            .WithMany()
+            .WithMany(u => u.Comentarios)
             .HasForeignKey(c => c.UsuarioId)
             .OnDelete(DeleteBehavior.Cascade);
 
