@@ -53,30 +53,30 @@ namespace healthycannab.Controllers
             return RedirectToAction("Producto", "Producto");
         }
 
-    [HttpPost]
-    public IActionResult ActualizarCantidad(int productoId, int cantidad)
-    {
-        var item = _carrito.Items.FirstOrDefault(i => i.ProductoId == productoId);
-        
-        if (item != null)
+        [HttpPost]
+        public IActionResult ActualizarCantidad(int productoId, int cantidad)
         {
-            item.Cantidad = cantidad;
+            var item = _carrito.Items.FirstOrDefault(i => i.ProductoId == productoId);
+            
+            if (item != null)
+            {
+                item.Cantidad = cantidad;
+            }
+
+            return RedirectToAction("CarritoCompras");
         }
 
-        return RedirectToAction("CarritoCompras");
-    }
-
-    public IActionResult Eliminar(int productoId)
-    {
-        var item = _carrito.Items.FirstOrDefault(i => i.ProductoId == productoId);
-        
-        if (item != null)
+        public IActionResult Eliminar(int productoId)
         {
-            _carrito.Items.Remove(item);
-        }
+            var item = _carrito.Items.FirstOrDefault(i => i.ProductoId == productoId);
+            
+            if (item != null)
+            {
+                _carrito.Items.Remove(item);
+            }
 
-        return RedirectToAction("CarritoCompras");
-    }
+            return RedirectToAction("CarritoCompras");
+        }
         
         public IActionResult CarritoCompras()
         {
@@ -143,7 +143,7 @@ namespace healthycannab.Controllers
 
             foreach (var item in _carrito.Items)
             {
-                detallesCarrito.Add($"Producto: {item.Producto.Nombre}, Precio: {item.Producto.Precio}, Cantidad: {item.Cantidad}");
+                detallesCarrito.Add($"Producto: {item.Producto.Nombre}, Precio: ${item.Producto.Precio}, Cantidad: {item.Cantidad}");
 
                 var detalle = new DetallePrecio
                 {
