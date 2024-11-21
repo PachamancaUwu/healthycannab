@@ -50,5 +50,11 @@ namespace healthycannab.Services
             return await query.ToListAsync();
 
         }
+
+        public async Task<Producto?> GetProductoById(int id)
+        {
+            return await _context.DataProducto.FindAsync(id);
+        }
+
     }
 }
