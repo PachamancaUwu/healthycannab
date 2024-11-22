@@ -26,7 +26,7 @@
                 @foreach (var item in Model.Items)
                 {
                     <tr>
-                        <td>@item.Producto.Descripcion</td>
+                        <td>@item.Producto.Nombre</td>
                         <td>$@item.Producto.Precio</td>
                         <td>
                             <form asp-controller="CarritoCompras" asp-action="ActualizarCantidad" method="post">
