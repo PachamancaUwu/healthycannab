@@ -6,7 +6,7 @@
 
 <style>
     thead {
-        background-color: #343a40;
+        background-color: #adb5d8;
         color: #ffffff;
     }
 
@@ -63,19 +63,28 @@
             <div class="text-center">
                 <form asp-controller="CarritoCompras" asp-action="Agregar" method="post">
                     <input type="hidden" name="productoId" value="@Model.Producto.Id" />
+                @if (User.Identity.IsAuthenticated)
+                {
                     <button type="submit" class="btn btn-primary btn-lg">Añadir al Carrito</button>
+                }
+                else{
+                    <button type="submit" class="btn btn-primary btn-lg disabled">Añadir al Carrito</button>
+                }
                 </form>
             </div>
+            
             <div class="mt-3 text-center">
                 @if (User.Identity.IsAuthenticated)
                 {
                     <a asp-controller="CarritoCompras" asp-action="CarritoCompras" class="btn btn-success">Ver Carrito</a>
                 }
                 else
-                {
+                {                    
+                    
                     <p class="text-warning">¡Necesitas Iniciar Sesión para comprar! >:(</p>
                 }
             </div>
+
         </div>
     </div>
 
@@ -98,10 +107,10 @@
                     <th>Precio</th>
                     <td>$@Model.Producto.Precio</td>
                 </tr>
-                <tr>
+                @*<tr>
                     <th>ID del Producto</th>
                     <td>@Model.Producto.Id</td>
-                </tr>
+                </tr>*@
             </thead>
         </table>
     </div>
