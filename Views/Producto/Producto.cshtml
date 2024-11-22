@@ -2,6 +2,15 @@
 @{
     ViewData["Title"] = "Catálogo de Productos";
 }
+
+@if (!User.Identity.IsAuthenticated)
+{
+    <div class="mt-4 text-center">
+    
+        <span>¡Necesitas Iniciar Sesión para comprar! >:(</span>
+    </div>
+}
+
 <h2>Catálogo de Productos</h2>
 
 <!-- Formulario de Filtro -->
@@ -63,15 +72,6 @@ else
 {
     <p class="text-center text-muted">No se encontraron productos con los criterios especificados.</p>
 }
-
-<div class="mt-4 text-center">
-    @if (!User.Identity.IsAuthenticated)
-    {
-        <div class="alert alert-warning" role="alert">
-            ¡Necesitas iniciar sesión para comprar!
-        </div>
-    }
-</div>
 
 <style>
     /* Agregamos un efecto hover a las imágenes */
