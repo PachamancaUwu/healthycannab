@@ -1,5 +1,9 @@
 @model healthycannab.Models.CarritoCompras
 
+@{
+    ViewData["Title"] = "Carrito de Compras";
+}
+
 <h2>Carrito de Compras</h2>
 <div class="container">
     @if (Model?.Items == null || Model.Items.Count == 0)
@@ -44,17 +48,51 @@
         </table>
 
         <div class="mt-3">
-            <strong>Total: $@Model.Total</strong>
+            @if (string.IsNullOrEmpty(Model.Codigo))
+            {
+                <strong>Total: $@Model.Total</strong>
+                <form asp-controller="CarritoCompras" asp-action="AplicarDescuento" method="post">
+                    <div class="form-group">
+                        <label for="codigoDescuento">Código de Descuento</label>
+                        <input type="text" class="form-control" id="codigoDescuento" name="codigo" placeholder="Ingresa tu código">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Aplicar Descuento</button>
+                </form>
+            }
+            else
+            {
+                <p><s>Total: $@Model.Total</s></p><br>
+                <strong>Total: $@Model.TotalDescuento</strong>
+                <form asp-controller="CarritoCompras" asp-action="EliminarDescuento" method="post">
+                    <div class="form-group">
+                        <label for="codigoDescuento">Código de Descuento</label>
+                        <input type="text" class="form-control" id="codigoDescuento" value="@Model.Codigo" readonly>
+                    </div>
+                    <button type="submit" class="btn btn-danger">Eliminar Descuento</button>
+                </form>
+            }
+
+            @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-danger mt-3">@ViewBag.Error</div>
+            }
+
         </div>
 
         <div class="mt-4 text-center">
-                <form asp-controller="CarritoCompras" asp-action="CreatePayment" method="post"> <!-- Cambia a POST -->
-                    <input type="hidden" name="total" value="@Model.Total" />
-                    
-                    <input type="hidden" name="items" value="@Html.Raw(Json.Serialize(Model.Items))" /> <!-- Opcional -->
-                    <button type="submit" class="btn btn-paypal">Pagar con PayPal</button>
-                </form>
-            </div>
+            <form asp-controller="CarritoCompras" asp-action="CreatePayment" method="post"> <!-- Cambia a POST -->
+                @if (string.IsNullOrEmpty(Model.Codigo))
+                {
+                    <input type="hidden" name="totalModel" value="@Model.Total" />
+                }
+                else
+                {
+                    <input type="hidden" name="totalModel" value="@Model.TotalDescuento" />
+                }
+                <input type="hidden" name="items" value="@Html.Raw(Json.Serialize(Model.Items))" /> <!-- Opcional -->
+                <button type="submit" class="btn btn-paypal">Pagar con PayPal</button>
+            </form>
+        </div>
         
        
         

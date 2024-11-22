@@ -78,6 +78,43 @@ namespace healthycannab.Controllers
             return RedirectToAction("CarritoCompras");
         }
         
+        [HttpPost]
+        public async Task<IActionResult> AplicarDescuento(string codigo){
+
+            var codigoPromocion = await _context.DataCodigoPromocion.FirstOrDefaultAsync(c => c.Codigo == codigo);
+            
+            if (codigoPromocion == null)
+            {
+                ViewBag.Error = "El código de descuento ingresado no es válido";
+                return View("CarritoCompras", _carrito);
+            }
+            if (codigoPromocion.FechaExpiracion <= DateTime.Now)
+            {
+                ViewBag.Error = "El código de descuento ingresado ya ha vencido";
+                return View("CarritoCompras", _carrito);
+            }
+            if (codigoPromocion.Usado)
+            {
+                ViewBag.Error = "El código de descuento ingresado ya ha sido usado";
+                return View("CarritoCompras", _carrito);
+            }
+
+            _carrito.Descuento = codigoPromocion.Descuento;
+            _carrito.TotalDescuento = _carrito.Total * (1 - _carrito.Descuento);
+            _carrito.Codigo = codigoPromocion.Codigo;
+
+            return RedirectToAction("CarritoCompras");
+        }
+
+        public IActionResult EliminarDescuento(){
+
+            _carrito.Descuento = 0;
+            _carrito.TotalDescuento = 0;
+            _carrito.Codigo = string.Empty;
+
+            return RedirectToAction("CarritoCompras");
+        }
+
         public IActionResult CarritoCompras()
         {
             return View(_carrito); 
@@ -85,9 +122,9 @@ namespace healthycannab.Controllers
 
 
         [HttpPost]
-        public IActionResult CreatePayment()
+        public IActionResult CreatePayment(decimal totalModel)
         {
-            var total = _carrito.Items.Sum(i => i.Producto.Precio * i.Cantidad);
+            var total = totalModel;
             var currency = "USD"; // Puedes hacerlo dinámico si es necesario
             var returnUrl = Url.Action("Success", "CarritoCompras", null, Request.Scheme);
             var cancelUrl = Url.Action("Cancel", "CarritoCompras", null, Request.Scheme);
@@ -124,18 +161,30 @@ namespace healthycannab.Controllers
                 return Unauthorized();
             }
             var usuario = await _context.DataUsuario.FindAsync(int.Parse(usuarioId));  
-
+            
             // Creamos el Pedido
-            var pedido = new Pedido
+            var pedido = new Pedido();
+            string mensajeUsoCodigo = string.Empty;
+            if (string.IsNullOrEmpty(_carrito.Codigo))
+            {       
+                pedido.Total = _carrito.Total;         
+            }
+            else
             {
-                Fecha = DateTime.UtcNow,
-                Total = _carrito.Items.Sum(i => i.Producto.Precio * i.Cantidad), 
-                UsuarioId = int.Parse(usuarioId) 
-            };
+                pedido.Total = _carrito.TotalDescuento;
+                var codigo = await _context.DataCodigoPromocion.FirstOrDefaultAsync(c => c.Codigo == _carrito.Codigo);
+                pedido.CodigoPromocionId = codigo.Id;
 
+                //Marcar código como usado  
+                codigo.Usado = true;
+                _context.DataCodigoPromocion.Update(codigo);
+                mensajeUsoCodigo = $"Al usar un código de descuento el precio total se redujo de ${_carrito.Total} a\n";
+            }
+            pedido.Fecha = DateTime.UtcNow;
+            pedido.UsuarioId = int.Parse(usuarioId);
         
             _context.DataPedido.Add(pedido);
-            await _context.SaveChangesAsync(); 
+            await _context.SaveChangesAsync();
 
             // Insertar en la tabla DetallePrecio
             var cantidadTotal = 0;
@@ -158,11 +207,18 @@ namespace healthycannab.Controllers
             }
             
             string detalles = string.Join("\n", detallesCarrito);
-            string mensaje = $"Hola {usuario.Nombre} {usuario.ApellidoPaterno} {usuario.ApellidoMaterno} (DNI: {usuario.Dni}),\n\nGracias por tu compra en HealthyCannab. Tu pedido ha sido procesado exitosamente y será llevado a la dirección: {usuario.Dirección}.\n\nProductos adquiridos:\n{detalles}\n\nTotal: {pedido.Total}\nFecha de compra: {pedido.Fecha}\n\n¡Gracias por elegirnos!";
-            await _emailSendService.SendEmailAsync("Compra en HealthyCannab", mensaje, usuario.Correo);
+
+            // Formatear a zona de Perú, Lima
+            TimeZoneInfo timeZone = TimeZoneInfo.FindSystemTimeZoneById("SA Pacific Standard Time");
+            DateTime localTime = TimeZoneInfo.ConvertTimeFromUtc(pedido.Fecha, timeZone);
+            string formattedDate = localTime.ToString("dd/MM/yyyy HH:mm:ss");
+
+            string mensaje = $"Hola {usuario.Nombre} {usuario.ApellidoPaterno} {usuario.ApellidoMaterno} (DNI: {usuario.Dni}),\n\nGracias por tu compra en HealthyCannab. Tu pedido ha sido procesado exitosamente y será llevado a la dirección: {usuario.Dirección}.\n\nProductos adquiridos:\n{detalles}\n\n{mensajeUsoCodigo}Total: ${pedido.Total}\nFecha de compra: {formattedDate}";
+
 
             //Si la cantidad de productos es mayor o igual a 4 se generará un código de descuento
-            if (cantidadTotal >= 4)
+            //No se genera un código si estás usando uno en tu compra actual
+            if (cantidadTotal >= 5 && string.IsNullOrEmpty(_carrito.Codigo))
             {
                 bool existe;
                 string partialCodigo;
@@ -183,13 +239,26 @@ namespace healthycannab.Controllers
 
                 _context.DataCodigoPromocion.Add(codigoPromocion);
                 
-                string mensajeCodigo = $"Usted ha realizado una compra de {cantidadTotal} productos en total.\n¡Por lo que se lleva un código de descuento de un 15% de UN SOLO USO para su próxima compra en las tiendas de HealthyCannab!\n\nCódigo:{codigoPromocion.Codigo}\nFecha de caducidad: {codigoPromocion.FechaExpiracion:dd/MM/yyyy}";
-                await _emailSendService.SendEmailAsync("Código de descuento por su compra en HealthyCannab", mensajeCodigo, usuario.Correo);
+                string mensajeCodigo = $"Usted ha realizado una compra de {cantidadTotal} productos en total.\n¡Por lo que se lleva un código de descuento de un 15% de UN SOLO USO para su próxima compra en las tiendas de HealthyCannab!\n\nCódigo: {codigoPromocion.Codigo}\nFecha de caducidad: {codigoPromocion.FechaExpiracion:dd/MM/yyyy}";
+                mensaje = mensaje + "\n\n" + mensajeCodigo;
+            }
+            else if (cantidadTotal >= 5 && !string.IsNullOrEmpty(_carrito.Codigo))
+            {
+                mensaje += $"\n\nUsted ha realizado una compra de {cantidadTotal} productos en total.\nSin embargo, las políticas de la empresa indican que no puede recibir un código de descuento si está usando uno en esta compra :c";
             }
 
             await _context.SaveChangesAsync();
 
+            mensaje += "\n\n¡Gracias por elegir a HealthyCannab!";
+
+            // Envia correo
+            await _emailSendService.SendEmailAsync("Compra en HealthyCannab", mensaje, usuario.Correo);
+
             _carrito.Items.Clear();
+            _carrito.Descuento = 0;
+            _carrito.TotalDescuento = 0;
+            _carrito.Codigo = string.Empty;
+            ModelState.Clear();
 
             return View("Success", executedPayment);
         }
