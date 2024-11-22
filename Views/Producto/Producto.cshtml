@@ -3,11 +3,12 @@
     ViewData["Title"] = "Catálogo de Productos";
 }
 
-@if (!User.Identity.IsAuthenticated)
+ @if (!User.Identity.IsAuthenticated)
 {
     <div class="mt-4 text-center">
-    
-        <span>¡Necesitas Iniciar Sesión para comprar! >:(</span>
+        <div class="alert alert-warning" role="alert">
+            ¡Necesitas iniciar sesión para comprar!
+        </div>
     </div>
 }
 

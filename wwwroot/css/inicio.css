@@ -104,11 +104,11 @@
   background-color: #f8f9fa;
 }
 .accordion-button {
-  background-color: #55c25e;
+  background-color: #c5c5c5;
   color: white;
 }
 .accordion-button:not(.collapsed) {
-  background-color: #5aa046;
+  background-color: #969696;
 }
 .accordion-body {
   background-color: white;
