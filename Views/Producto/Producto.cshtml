@@ -1,5 +1,7 @@
 @model IEnumerable<healthycannab.Models.Producto>
-
+@{
+    ViewData["Title"] = "Catálogo de Productos";
+}
 <h2>Catálogo de Productos</h2>
 
 <!-- Formulario de Filtro -->
@@ -18,53 +20,72 @@
             <input type="number" id="precioMax" name="precioMax" class="form-control" value="@ViewData["precioMax"]" placeholder="Ej. 200">
         </div>
     </div>
-    <div class="mt-3">
+    <div class="mt-3 text-center">
         <button type="submit" class="btn btn-primary">Aplicar Filtro</button>
     </div>
 </form>
 
-
-
 <br>
 @if (Model.Any())
 {
-<div class="container">
-    <div class="row">
-        @foreach (var product in Model)
-        {
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <img class="card-img-top" src="@product.ImagenUrl" alt="@product.Nombre" style="height: 200px; object-fit: cover;">
-                    <div class="card-body">
-                        <h5 class="card-title">@product.Nombre</h5>
-                        <p class="card-text">@product.Descripcion</p>
-                        <p class="card-text"><strong>Precio: $@product.Precio</strong></p>
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                        <form asp-controller="CarritoCompras" asp-action="Agregar" method="post">
-                            <input type="hidden" name="productoId" value="@product.Id" />
-                            <button type="submit" class="btn btn-primary">Añadir al Carrito</button>
-                        </form>
-                        }
+    <div class="container">
+        <div class="row g-4">
+            @foreach (var product in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card shadow-sm border-0 h-100">
+                        <a asp-controller="Producto" asp-action="DetalleCompleto" asp-route-id="@product.Id" class="d-block">
+                            <img class="card-img-top p-3" src="@product.ImagenUrl" alt="@product.Nombre" style="height: 200px; object-fit: contain; transition: transform 0.3s;">
+                        </a>
+                        <div class="card-body text-center">
+                            <h5 class="card-title">
+                                <a asp-controller="Producto" asp-action="DetalleCompleto" asp-route-id="@product.Id" class="text-decoration-none text-dark">
+                                    @product.Nombre
+                                </a>
+                            </h5>
+                            <p class="card-text text-muted">@product.Descripcion</p>
+                            <p class="card-text fw-bold text-primary">Precio: $@product.Precio</p>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <form asp-controller="CarritoCompras" asp-action="Agregar" method="post">
+                                    <input type="hidden" name="productoId" value="@product.Id" />
+                                    <button type="submit" class="btn btn-outline-success w-100">Añadir al Carrito</button>
+                                </form>
+                            }
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
-</div>
 }
 else
 {
-    <p>No se encontraron productos con los criterios especificados.</p>
+    <p class="text-center text-muted">No se encontraron productos con los criterios especificados.</p>
 }
 
 <div class="mt-4 text-center">
-    @if (User.Identity.IsAuthenticated)
+    @if (!User.Identity.IsAuthenticated)
     {
-    <a asp-controller="CarritoCompras" asp-action="CarritoCompras" class="btn btn-success">Ver Carrito</a>
-    }
-    else
-    {
-    <span>¡Necesitas Iniciar Sesión para comprar! >:(</span>
+        <div class="alert alert-warning" role="alert">
+            ¡Necesitas iniciar sesión para comprar!
+        </div>
     }
 </div>
+
+<style>
+    /* Agregamos un efecto hover a las imágenes */
+    .card img:hover {
+        transform: scale(1.05);
+    }
+
+    /* Personalizamos las tarjetas */
+    .card {
+        border-radius: 0.75rem;
+        transition: box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+</style>

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using healthycannab.Data;
@@ -11,9 +12,11 @@ using healthycannab.Data;
 namespace healthycannab.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241111201217_UpdateComentario")]
+    partial class UpdateComentario
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -222,35 +225,6 @@ namespace healthycannab.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("healthycannab.Models.CodigoPromocion", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Codigo")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("Descuento")
-                        .HasColumnType("numeric");
-
-                    b.Property<DateTime>("FechaExpiracion")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("Usado")
-                        .HasColumnType("boolean");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Codigo")
-                        .IsUnique();
-
-                    b.ToTable("codigo_promocion");
-                });
-
             modelBuilder.Entity("healthycannab.Models.Comentario", b =>
                 {
                     b.Property<int>("Id")
@@ -261,9 +235,8 @@ namespace healthycannab.Data.Migrations
 
                     b.Property<string>("Contenido")
                         .IsRequired()
-
-                        .HasColumnType("text");
-
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
 
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("timestamp with time zone");
@@ -271,18 +244,13 @@ namespace healthycannab.Data.Migrations
                     b.Property<int>("ProductoId")
                         .HasColumnType("integer");
 
-
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("integer");
+                    b.Property<string>("Usuario")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductoId");
-
-                    b.HasIndex("UsuarioId");
-
-                    b.ToTable("comentario");
-
+                    b.ToTable("comentarios");
                 });
 
             modelBuilder.Entity("healthycannab.Models.Contacto", b =>
@@ -312,54 +280,6 @@ namespace healthycannab.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("contacto");
-                });
-
-            modelBuilder.Entity("healthycannab.Models.DetallePrecio", b =>
-                {
-                    b.Property<int>("PedidoId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ProductoId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Cantidad")
-                        .HasColumnType("integer");
-
-                    b.HasKey("PedidoId", "ProductoId");
-
-                    b.HasIndex("ProductoId");
-
-                    b.ToTable("detalle_precio");
-                });
-
-            modelBuilder.Entity("healthycannab.Models.Pedido", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("CodigoPromocionId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("Fecha")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<decimal>("Total")
-                        .HasColumnType("numeric");
-
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CodigoPromocionId")
-                        .IsUnique();
-
-                    b.HasIndex("UsuarioId");
-
-                    b.ToTable("pedido");
                 });
 
             modelBuilder.Entity("healthycannab.Models.Producto", b =>
@@ -485,86 +405,6 @@ namespace healthycannab.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("healthycannab.Models.Comentario", b =>
-                {
-                    b.HasOne("healthycannab.Models.Producto", "Producto")
-                        .WithMany("Comentarios")
-                        .HasForeignKey("ProductoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("healthycannab.Models.Usuario", "Usuario")
-                        .WithMany("Comentarios")
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Producto");
-
-                    b.Navigation("Usuario");
-                });
-
-            modelBuilder.Entity("healthycannab.Models.DetallePrecio", b =>
-                {
-                    b.HasOne("healthycannab.Models.Pedido", "Pedido")
-                        .WithMany("DetallesPrecios")
-                        .HasForeignKey("PedidoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("healthycannab.Models.Producto", "Producto")
-                        .WithMany("DetallesPrecios")
-                        .HasForeignKey("ProductoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Pedido");
-
-                    b.Navigation("Producto");
-                });
-
-            modelBuilder.Entity("healthycannab.Models.Pedido", b =>
-                {
-                    b.HasOne("healthycannab.Models.CodigoPromocion", "CodigoPromocion")
-                        .WithOne("Pedido")
-                        .HasForeignKey("healthycannab.Models.Pedido", "CodigoPromocionId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("healthycannab.Models.Usuario", "Usuario")
-                        .WithMany("Pedidos")
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CodigoPromocion");
-
-                    b.Navigation("Usuario");
-                });
-
-            modelBuilder.Entity("healthycannab.Models.CodigoPromocion", b =>
-                {
-                    b.Navigation("Pedido");
-                });
-
-            modelBuilder.Entity("healthycannab.Models.Pedido", b =>
-                {
-                    b.Navigation("DetallesPrecios");
-                });
-
-            modelBuilder.Entity("healthycannab.Models.Producto", b =>
-                {
-                    b.Navigation("Comentarios");
-
-                    b.Navigation("DetallesPrecios");
-                });
-
-            modelBuilder.Entity("healthycannab.Models.Usuario", b =>
-                {
-                    b.Navigation("Comentarios");
-
-                    b.Navigation("Pedidos");
                 });
 #pragma warning restore 612, 618
         }
