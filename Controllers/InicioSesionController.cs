@@ -47,7 +47,6 @@ namespace healthycannab.Controllers
             return View(usuario);
         }
 
-        /*
         // Valida el correo electrónico con ZeroBounce
         var validationResponse = await _emailValidation.ValidateEmailAsync(usuario.Correo);
 
@@ -57,7 +56,6 @@ namespace healthycannab.Controllers
             ViewBag.Error = "El correo proporcionado no es válido.";
             return View(usuario);
         }
-        */
 
         // Si el correo no existe y es válido, procede con el registro
         usuario.Rol = "Usuario";
