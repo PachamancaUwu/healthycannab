@@ -26,7 +26,7 @@
                 @foreach (var item in Model.Items)
                 {
                     <tr>
-                        <td>@item.Producto.Descripcion</td>
+                        <td>@item.Producto.Nombre</td>
                         <td>$@item.Producto.Precio</td>
                         <td>
                             <form asp-controller="CarritoCompras" asp-action="ActualizarCantidad" method="post">
@@ -56,6 +56,7 @@
                         <label for="codigoDescuento">Código de Descuento</label>
                         <input type="text" class="form-control" id="codigoDescuento" name="codigo" placeholder="Ingresa tu código">
                     </div>
+                    <br>
                     <button type="submit" class="btn btn-primary">Aplicar Descuento</button>
                 </form>
             }
@@ -90,12 +91,12 @@
                     <input type="hidden" name="totalModel" value="@Model.TotalDescuento" />
                 }
                 <input type="hidden" name="items" value="@Html.Raw(Json.Serialize(Model.Items))" /> <!-- Opcional -->
-                <button type="submit" class="btn btn-paypal">Pagar con PayPal</button>
+                
+                <button type="submit" class="paypal-button">
+                    <img src="https://www.paypalobjects.com/images/shared/paypal-logo-129x32.svg" alt="PayPal">
+                </button>
             </form>
         </div>
-        
-       
-        
          <div id="paypal-button-container"></div>
         
     }
