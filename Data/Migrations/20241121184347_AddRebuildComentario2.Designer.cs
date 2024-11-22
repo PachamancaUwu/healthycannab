@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using healthycannab.Data;
@@ -11,9 +12,11 @@ using healthycannab.Data;
 namespace healthycannab.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241121184347_AddRebuildComentario2")]
+    partial class AddRebuildComentario2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -222,35 +225,6 @@ namespace healthycannab.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("healthycannab.Models.CodigoPromocion", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Codigo")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("Descuento")
-                        .HasColumnType("numeric");
-
-                    b.Property<DateTime>("FechaExpiracion")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("Usado")
-                        .HasColumnType("boolean");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Codigo")
-                        .IsUnique();
-
-                    b.ToTable("codigo_promocion");
-                });
-
             modelBuilder.Entity("healthycannab.Models.Comentario", b =>
                 {
                     b.Property<int>("Id")
@@ -273,11 +247,16 @@ namespace healthycannab.Data.Migrations
                     b.Property<int>("UsuarioId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("UsuarioId1")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ProductoId");
 
                     b.HasIndex("UsuarioId");
+
+                    b.HasIndex("UsuarioId1");
 
                     b.ToTable("comentario");
                 });
@@ -337,9 +316,6 @@ namespace healthycannab.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CodigoPromocionId")
-                        .HasColumnType("integer");
-
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("timestamp with time zone");
 
@@ -350,9 +326,6 @@ namespace healthycannab.Data.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CodigoPromocionId")
-                        .IsUnique();
 
                     b.HasIndex("UsuarioId");
 
@@ -493,10 +466,14 @@ namespace healthycannab.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("healthycannab.Models.Usuario", "Usuario")
-                        .WithMany("Comentarios")
+                        .WithMany()
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("healthycannab.Models.Usuario", null)
+                        .WithMany("Comentarios")
+                        .HasForeignKey("UsuarioId1");
 
                     b.Navigation("Producto");
 
@@ -524,25 +501,13 @@ namespace healthycannab.Data.Migrations
 
             modelBuilder.Entity("healthycannab.Models.Pedido", b =>
                 {
-                    b.HasOne("healthycannab.Models.CodigoPromocion", "CodigoPromocion")
-                        .WithOne("Pedido")
-                        .HasForeignKey("healthycannab.Models.Pedido", "CodigoPromocionId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
                     b.HasOne("healthycannab.Models.Usuario", "Usuario")
                         .WithMany("Pedidos")
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("CodigoPromocion");
-
                     b.Navigation("Usuario");
-                });
-
-            modelBuilder.Entity("healthycannab.Models.CodigoPromocion", b =>
-                {
-                    b.Navigation("Pedido");
                 });
 
             modelBuilder.Entity("healthycannab.Models.Pedido", b =>

@@ -7,26 +7,25 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace healthycannab.Models
 {
-    [Table("producto")]
-    public class Producto
+    [Table("pedido")]
+    public class Pedido
     {
         [Key]  
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
- 
-        public string? Nombre { get; set; }
+        public DateTime Fecha { get; set; }
+        public decimal Total { get; set; }
 
-        
-        public string? Descripcion { get; set; }
+        // Claves Foráneas
+        public int UsuarioId { get; set; }
+        public Usuario Usuario { get; set; }
 
-        
-        [Column(TypeName = "decimal(18,2)")]  
-        public decimal Precio { get; set; }
-
-        public string? ImagenUrl { get; set; }
+        public int? CodigoPromocionId { get; set; }
+        public CodigoPromocion? CodigoPromocion { get; set; }
 
         // Relaciones
-        public ICollection<Comentario> Comentarios { get; set; }
         public ICollection<DetallePrecio> DetallesPrecios { get; set; }
+
+    
     }
 }

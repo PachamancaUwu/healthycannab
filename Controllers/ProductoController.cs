@@ -121,6 +121,37 @@ namespace healthycannab.Controllers
             return View();
         }
 
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> AgregarComentario(int productoId, string contenido)
+        {
+            //obtener el nombre del usuario
+            var usuario= await _context.DataUsuario.FirstOrDefaultAsync(u => u.Correo == User.Identity.Name);
+
+            if (usuario == null)
+            {
+                return Unauthorized(); // Asegúrate de que el usuario exista en la base de datos
+            }
+
+            //Nuevo comentario
+            var comentario = new Comentario
+            {
+                ProductoId = productoId,
+                Contenido = contenido,
+                UsuarioId = usuario.Id,
+                Fecha = DateTime.UtcNow //formato UTC aceptado por postgres
+            };
+
+            //guarda comentarios en la bd
+            _context.DataComentario.Add(comentario);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("DetalleCompleto", new { id = productoId });
+        }
+
+
+
         //filtro
         //[HttpGet("Producto/Filtrar")]
         public async Task<IActionResult> ListarProductos(string? nombre, decimal? precioMin, decimal? precioMax)
@@ -135,6 +166,31 @@ namespace healthycannab.Controllers
 
             return View("Producto", productos);
         }
+
+        //Detalle completo del producto
+        public async Task<IActionResult> DetalleCompleto(int id)
+        {
+           var producto = await _context.DataProducto
+            .Include(p => p.Comentarios)
+            .ThenInclude(c => c.Usuario) // Incluir datos del usuario
+            .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (producto == null)
+            {
+                return NotFound();
+            }
+
+            var viewModel = new ProductoDetalleViewModel
+            {
+                Producto = producto,
+                Comentarios = producto.Comentarios.ToList()
+            };
+
+            return View(viewModel);
+        }
+
+
+
 
 
         [Authorize(Roles ="Administrador")]
