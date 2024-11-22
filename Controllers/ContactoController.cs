@@ -21,13 +21,13 @@ namespace healthycannab.Controllers
     {
         private readonly ILogger<ContactoController> _logger;
         private readonly ApplicationDbContext _context;
-        private readonly EmailSendService _emailSend;
+        private readonly EmailSendService _emailSendService;
 
-        public ContactoController(ILogger<ContactoController> logger, ApplicationDbContext context, EmailSendService emailSend)
+        public ContactoController(ILogger<ContactoController> logger, ApplicationDbContext context, EmailSendService emailSendService)
         {
             _logger = logger;
             _context = context;
-            _emailSend = emailSend;
+            _emailSendService = emailSendService;
         }
 
         
@@ -80,7 +80,7 @@ namespace healthycannab.Controllers
                     if(scoreValueFirst > scoreValueSecond)
                     {
                         string mensaje = $"Nombre: {contacto.Nombre}\nCorreo: {contacto.Correo}\nComentario: {contacto.Mensaje}";
-                        await _emailSend.SendEmailAsync("Nuevo Comentario de Contáctanos", mensaje);
+                        await _emailSendService.SendEmailAsync("Nuevo Comentario de Contáctanos", mensaje, "healthycannabis0@gmail.com");
                     }
                 }
                 

@@ -19,7 +19,7 @@ namespace healthycannab.Services
             _config = config;
         }
 
-        public async Task SendEmailAsync(string subject, string message)
+        public async Task SendEmailAsync(string subject, string message, string to)
         {
             // Obtén la API key desde la variable de entorno
             var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
@@ -29,8 +29,8 @@ namespace healthycannab.Services
             }
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress("mathias_cueto@usmp.pe", "HealthyCannab");
-            var to = new EmailAddress("healthycannabis0@gmail.com");
-            var msg = MailHelper.CreateSingleEmail(from, to, subject, message, null);
+            var partialTo = new EmailAddress(to);
+            var msg = MailHelper.CreateSingleEmail(from, partialTo, subject, message, null);
 
             var response = await client.SendEmailAsync(msg);
         }

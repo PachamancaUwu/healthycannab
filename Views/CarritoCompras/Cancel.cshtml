@@ -2,9 +2,36 @@
     ViewData["Title"] = "Pago Cancelado";
 }
 
-<h1>Pago Cancelado</h1>
-<p>Lamentamos que su pago haya sido cancelado.</p>
-<p>Si desea intentar nuevamente, puede volver a la página de pago.</p>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</head>
 
-<a href="@Url.Action("CreatePayment", "CarritoCompras")">Volver a pagar</a>
-<a href="@Url.Action("Inicio", "Main")">Volver a la página principal</a>
+<div class="container mt-5">
+    <div class="card shadow-lg border-danger">
+        <div class="card-header bg-danger text-white">
+            <h4 class="card-title mb-0">Pago Cancelado</h4>
+        </div>
+        <div class="card-body">
+            <h5 class="text-center text-danger">Lamentamos que su pago haya sido cancelado.</h5>
+            <p class="text-center">Si desea intentar nuevamente, puede volver a la página de pago.</p>
+
+            <div class="d-flex justify-content-center mt-4">
+                 <a asp-controller="CarritoCompras" asp-action="CarritoCompras" class="btn btn-primary" style="background-color: green; color: greenyellow; border-color: green;"> Carrito de Compras</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .container {
+        max-width: 600px;
+    }
+    .card {
+        border-radius: 15px;
+    }
+    .card-header {
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+</style>
