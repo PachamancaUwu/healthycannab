@@ -126,14 +126,24 @@ namespace healthycannab.Controllers
         [Authorize]
         public async Task<IActionResult> AgregarComentario(int productoId, string contenido)
         {
+            //obtener el nombre del usuario
+            var usuario= await _context.DataUsuario.FirstOrDefaultAsync(u => u.Correo == User.Identity.Name);
+
+            if (usuario == null)
+            {
+                return Unauthorized(); // Asegúrate de que el usuario exista en la base de datos
+            }
+
+            //Nuevo comentario
             var comentario = new Comentario
             {
                 ProductoId = productoId,
                 Contenido = contenido,
-                Usuario = User.Identity.Name,
+                UsuarioId = usuario.Id,
                 Fecha = DateTime.UtcNow //formato UTC aceptado por postgres
             };
 
+            //guarda comentarios en la bd
             _context.DataComentario.Add(comentario);
             await _context.SaveChangesAsync();
 
@@ -160,21 +170,20 @@ namespace healthycannab.Controllers
         //Detalle completo del producto
         public async Task<IActionResult> DetalleCompleto(int id)
         {
-             var producto = await _productoService.GetProductoById(id);
+           var producto = await _context.DataProducto
+            .Include(p => p.Comentarios)
+            .ThenInclude(c => c.Usuario) // Incluir datos del usuario
+            .FirstOrDefaultAsync(p => p.Id == id);
+
             if (producto == null)
             {
                 return NotFound();
             }
 
-            var comentarios = await _context.DataComentario
-                .Where(c => c.ProductoId == id)
-                .ToListAsync();
-
             var viewModel = new ProductoDetalleViewModel
             {
                 Producto = producto,
-                Comentarios = comentarios,
-                NuevoComentario = new Comentario()  // Inicializa un nuevo comentario vacío
+                Comentarios = producto.Comentarios.ToList()
             };
 
             return View(viewModel);

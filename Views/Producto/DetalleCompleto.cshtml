@@ -135,7 +135,7 @@
                 @foreach (var comentario in Model.Comentarios)
                 {
                     <div class="card p-3 mb-3">
-                        <p><strong>@comentario.Usuario</strong> - @comentario.Fecha.ToString("g")</p>
+                        <p><strong>@comentario.Usuario.Correo</strong> - @comentario.Fecha.ToString("g")</p>
                         <p>@comentario.Contenido</p>
                     </div>
                 }
